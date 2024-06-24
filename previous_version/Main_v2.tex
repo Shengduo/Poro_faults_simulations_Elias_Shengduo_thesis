@@ -1,0 +1,1123 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AGUJournalTemplate.tex: this template file is for articles formatted with LaTeX
+%
+% This file includes commands and instructions
+% given in the order necessary to produce a final output that will
+% satisfy AGU requirements, including customized APA reference formatting.
+%
+% You may copy this file and give it your
+% article name, and enter your text.
+%
+%
+% Step 1: Set the \documentclass
+%
+
+
+%% To submit your paper:
+\documentclass[draft]{agujournal2019}
+\usepackage{url} %this package should fix any errors with URLs in refs.
+\usepackage{lineno}
+\usepackage{float}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage[inline]{trackchanges} %for better track changes. finalnew option will compile document with changes incorporated.
+\usepackage{soul}
+\linenumbers
+%%%%%%%
+% As of 2018 we recommend use of the TrackChanges package to mark revisions.
+% The trackchanges package adds five new LaTeX commands:
+%
+%  \note[editor]{The note}
+%  \annote[editor]{Text to annotate}{The note}
+%  \add[editor]{Text to add}
+%  \remove[editor]{Text to remove}
+%  \change[editor]{Text to remove}{Text to add}
+%
+% complete documentation is here: http://trackchanges.sourceforge.net/
+%%%%%%%
+
+%\draftfalse
+
+%% Enter journal name below.
+%% Choose from this list of Journals:
+%
+% JGR: Atmospheres
+% JGR: Biogeosciences
+% JGR: Earth Surface
+% JGR: Oceans
+% JGR: Planets
+% JGR: Solid Earth
+% JGR: Space Physics
+% Global Biogeochemical Cycles
+% Geophysical Research Letters
+% Paleoceanography and Paleoclimatology
+% Radio Science
+% Reviews of Geophysics
+% Tectonics
+% Space Weather
+% Water Resources Research
+% Geochemistry, Geophysics, Geosystems
+% Journal of Advances in Modeling Earth Systems (JAMES)
+% Earth's Future
+% Earth and Space Science
+% Geohealth
+%
+% ie, \journalname{Water Resources Research}
+
+\journalname{JGR: Solid Earth}
+
+
+\begin{document}
+
+%% ------------------------------------------------------------------------ %%
+%  Title
+%
+% (A title should be specific, informative, and brief. Use
+% abbreviations only if they are defined in the abstract. Titles that
+% start with general keywords then specific terms are optimized in
+% searches)
+%
+%% ------------------------------------------------------------------------ %%
+
+
+
+\title{A spectral boundary-integral method for faults and fractures in a poroelastic solid: Simulations of a rate-and-state fault with dilatancy, compaction, and fluid injection}
+
+%% ------------------------------------------------------------------------ %%
+%
+%  AUTHORS AND AFFILIATIONS
+%
+%% ------------------------------------------------------------------------ %%
+
+% Authors are individuals who have significantly contributed to the
+% research and preparation of the article. Group authors are allowed, if
+% each author in the group is separately identified in an appendix.)
+
+% List authors by first name or initial followed by last name and
+% separated by commas. Use \affil{} to number affiliations, and
+% \thanks{} for author notes.
+% Additional author notes should be indicated with \thanks{} (for
+% example, for current addresses).
+
+% Example: \authors{A. B. Author\affil{1}\thanks{Current address, Antartica}, B. C. Author\affil{2,3}, and D. E.
+% Author\affil{3,4}\thanks{Also funded by Monsanto.}}
+
+\authors{El\'ias Rafn Heimisson\affil{1,2}, Shengduo Liu\affil{3}, Nadia Lapusta\affil{2,3}, John Rudnicki\affil{4}}
+
+
+
+\affiliation{1}{Swiss Seismological Service, ETH Zurich, Zurich, Switzerland}
+\affiliation{2}{Division of Geological and Planetary Sciences, California Institute of Technology, Pasadena, CA, USA}
+\affiliation{3}{Division of Engineering and Applied Science, California Institute of Technology, Pasadena, California, USA}
+\affiliation{4}{Department of Civil and Environmental Engineering and Department of Mechanical Engineering, Northwestern University, Evanston, IL, USA}
+%% Corresponding Author:
+% Corresponding author mailing address and e-mail address:
+
+% (include name and email addresses of the corresponding author.  More
+% than one corresponding author is allowed in this LaTeX file and for
+% publication; but only one corresponding author is allowed in our
+% editorial system.)
+
+% Example: \correspondingauthor{First and Last Name}{email@address.edu}
+
+\correspondingauthor{El\'ias Rafn Heimisson}{elias.heimisson@sed.ethz.ch}
+
+%% Keypoints, final entry on title page.
+
+%  List up to three key points (at least one is required)
+%  Key Points summarize the main points and conclusions of the article
+%  Each must be 100 characters or less with no special characters or punctuation and must be complete sentences
+
+% Example:
+% \begin{keypoints}
+% \item	List up to three key points (at least one is required)
+% \item	Key Points summarize the main points and conclusions of the article
+% \item	Each must be 100 characters or less with no special characters or punctuation and must be complete sentences
+% \end{keypoints}
+
+\begin{keypoints}
+\item We present a novel spectral boundary-integral method (SBIM) for friction and fracture problems in a 2D poroelastic solid
+\item We solve for fault slip with fully-coupled injection and dilatancy on a rate-and-state fault
+\item We identify significant influence of bulk poroelastic properties and bulk diffusivity on fault stability during injection
+\end{keypoints}
+
+%% ------------------------------------------------------------------------ %%
+%
+%  ABSTRACT and PLAIN LANGUAGE SUMMARY
+%
+% A good Abstract will begin with a short description of the problem
+% being addressed, briefly describe the new data or analyses, then
+% briefly states the main conclusion(s) and how they are supported and
+% uncertainties.
+
+% The Plain Language Summary should be written for a broad audience,
+% including journalists and the science-interested public, that will not have 
+% a background in your field.
+%
+% A Plain Language Summary is required in GRL, JGR: Planets, JGR: Biogeosciences,
+% JGR: Oceans, G-Cubed, Reviews of Geophysics, and JAMES.
+% see http://sharingscience.agu.org/creating-plain-language-summary/)
+%
+%% ------------------------------------------------------------------------ %%
+
+%% \begin{abstract} starts the second page
+%245/250
+\begin{abstract}
+Fluid-fault interactions result in many two-way coupled processes across a range of length scales, from the micron scale of the shear zone to the kilometer scale of the slip patch. The scale separation and complex coupling render fluid-fault interactions challenging to simulate, yet they are key for our understanding of experimental data and induced seismicity. Here we present spectral boundary-integral solutions for in-plane interface sliding and opening in a poroelastic solid. We solve for fault slip in the presence of rate-and-state frictional properties, inelastic dilatancy, injection, and the coupling of a shear zone and a diffusive poroelastic bulk. The shear localization zone is treated as having a finite width and non-constant pore pressure, albeit with a simplified mathematical representation. The dimension of the 2D plane strain problem is reduced to a 1D problem resulting in increased computational efficiency and incorporation of small-scale shear-zone physics into the boundary conditions. We apply the method to data from a fault injection experiment that has been previously studied with modeling. We explore the influence of bulk poroelastic response, bulk diffusivity in addition to inelastic dilatancy on fault slip during injection. Dilatancy not only alters drastically the stability of fault slip but also the nature of pore pressure evolution on the fault, causing significant deviation from the standard square-root-of-time diffusion. More surprisingly, varying the bulk's poroelastic response (by using different values of the undrained Poisson's ratio) and bulk hydraulic diffusivity can be as critical in determining rupture stability as the inelastic dilatancy. 
+\end{abstract}
+
+\section*{Plain Language Summary}
+Earthquakes occur on faults deep in the Earth's crust. At this depth, faults are surrounded by rock and water that fills up pores and fractures. This water affects how the rock responds to earthquakes or slip on faults. Water also plays an important role within the faults since it will decrease or increase the frictional resistance by pressurization or depressurization, respectively. A common cause of pressurization is by injection of fluid, for example, during carbon sequestration or waste-water disposal. Here we develop an efficient method to simulate fault slip and earthquakes in a porous and fluid-filled medium. This allows us to understand better the role of water in causing pressure changes that affect the earthquake processes, either in the host rock or within the fault. We compare our method to a previously studied experiment in which water was injected directly into a fault and slip was measured. In addition, we investigate the poroelastic properties of the host rock, which describe how fluids interact with the elastic rock surrounding the fault. The poroelastic properties of the host rock have not received much attention in prior studies. They can significantly influence if and when an earthquake occurs due to injection.
+
+
+%% ------------------------------------------------------------------------ %%
+%
+%  TEXT
+%
+%% ------------------------------------------------------------------------ %%
+
+%%% Suggested section heads:
+% 
+%
+% The main text should start with an introduction. Except for short
+% manuscripts (such as comments and replies), the text should be divided
+% into sections, each with its own heading.
+
+% Headings should be sentence fragments and do not begin with a
+% lowercase letter or number. Examples of good headings are:
+
+% \section{Materials and Methods}
+% Here is text on Materials and Methods.
+%
+% \subsection{A descriptive heading about methods}
+% More about Methods.
+%
+% \section{Data} (Or section title might be a descriptive heading about data)
+%
+% \section{Results} (Or section title might be a descriptive heading about the
+% results)
+%
+% \section{Conclusions}
+
+
+\section{Introduction}
+
+The role of fluids in seismic and aseismic faulting processes has been of significant interest in the last few years. Mounting evidence indicates that fluids may play an important role in a diverse set of mechanisms that alter fault slip behavior ranging from earthquake triggering to slow slip events. 
+
+The most prominent example of fluid and fault interactions is the clear link between fluid injection and induced seismicity, as originally pointed out by \citeA{Raleigh1976,Hsieh1981} and remains a critical issue \cite<e.g.>{Ellsworth2013}. This phenomenon has a straightforward mechanical explanation: higher pore pressures, due to injection, reduce the effective normal stress and thus the frictional resistance of the fault. This causes increased slip rate on faults and may accelerate the generation of seismic instabilities. This problem has been frequently modeled with a straightforward implementation of one-way coupling of pore pressure and frictional strength where pore pressure perturbations are imposed and slip or number of seismic events are computed. 
+
+The coupling injection and fault slip is far from trivial, for example, injection into faults may also lead to sustained aseismic transients \cite<e.g.>{Viesca2019,Bhattacharya2019,Dublanchet2019}, which may trigger microseismicity \cite{Guglielmi2015,Morel2020}. The aseismic slip itself may later become seismic depending on the frictional properties of the fault \cite{Larochelle2021}. A more detailed investigation of this problem reveals considerable complexity in pore pressure evolution if heterogeneous permeability structures and poroelasticity are considered \cite<e.g.>{Yehya2018}
+
+The poroelastic properties of the crust have lately been receiving more interest, most prominently as a long-ranging and fast-acting mechanism in which faults can be stressed due to injection or extraction \cite{Segall2015}. However, there is also significant literature on the role of poroelasticity in influencing the nucleation or propagation of seismic and aseismic ruptures \cite{Rudnicki1991,Dunham2008,Jha2014,Heimisson2019,Heimisson2021}. An effect of particular importance in regard to the influence of poroelasticity is that, during in-plane sliding, compression and dilation of the host rock induces pore pressure change in the shear zone \cite{Heimisson2019,Heimisson2021}; this effect is discussed further in section \ref{sec:problem}. Thus the poroelastic response of the bulk, induced by an ongoing rupture, may influence the effective normal stress and hence shear resistance to the rupture, creating a feedback loop. Poroelasticity also influences and introduces a diffusion-dependent time-evolving shear stress on the fault plane with significant implications for the stability of sliding \cite{Heimisson2021}. 
+
+Processes other than poroelasticity may change pore pressure in an active shear zone and affect rupture and instability formation on faults. The generation of aseismic slip transients on faults is believed to be related to pore fluids. For example, transient slow slip events (SSEs) in subduction zones are thought to be related to high pore pressure conditions \cite<e.g.,>{Liu2007,Burgmann2018}. A primary challenge in explaining the mechanics of transient slow slip is to understand why it starts, but does not become an earthquake. One potential mechanism is a geometric restriction, in which the high-pore-pressure region is large enough to cause slip acceleration, for example, due to rate-and-state velocity-weakening friction properties, but too small for that slip to become seismic \cite{Liu2005,Liu2007}. Another potential explanation is the change from velocity-weakening to velocity-strengthening friction with increasing slip rates \cite{Shibazaki2007,Hawthorne2013,Leeman2016}. Rate-and-state faults with velocity-strengthening friction and additional destabilizing effects can also produce SSEs in models with poroelasticity \cite{Heimisson2019} and viscoplasticity \cite{Tong2018}. Inelastic dilatancy of granular fault gouge \cite<e.g.>{Marone1990,Proctor2020} can lead to a reduction in pore pressure and stabilize fault slip. This is a naturally present fluid-related mechanism that can explain how slow slip transients do not evolve into seismic events \cite<e.g.>{Segall1995,Segall2010b}. Modeling of fault slip with inelastic dilatancy can explain many properties of slow slip events, including their scaling \cite{Zilio2020}. Dilatant behavior of rocks acts at many scales and does not just affect fine scale granular gouge, but for example larger scale brittle rock masses may undergo inelastic deformation \cite{Brace1966}. Here we focus on in-elastic dilatancy of gouge and large scale elastic volumetric changes in the bulk. 
+
+Multiple mechanisms may act at a time. Recently, numerical simulations have started exploring the simultaneous injection and inelastic dilatancy in a diffusive shear zone \cite{Ciardo2019,Yang2021}. However, these efforts have been limited to a non-diffusive and elastic bulk. Coupling with a poroelastic bulk introduces another degree of complexity, where elastic dilation and compression of the bulk generate pore pressure transients. Further complexity is introduced by field observations indicating that permeability of the shear zone in a fault core may be very different from the surrounding damage zone and host rock \cite<e.g.>{Wibberley2003}. In addition, the shearing of gouge material can dramatically reduce the permeability perpendicular to the shearing direction and thus result in the shear zone having a significantly anisotropic permeability \cite{Zhang1999}.
+
+When slip speed becomes high enough in a narrow enough shear layer with small enough permeability, then thermal pressurization of pore fluids due to shear heating may also become important \cite<e.g.>{Rice2006,Bizzarri2006}. While such effects may be critical for seismic rupture evolution \cite<e.g.>{Noda2012}, they may be negligible or at least much less pronounced in the nucleation phases of the seismic cycle \cite{Segall2006,segall2010}, which are primarily the focus of this study. Consequently, we do not account for thermal pressurization, although it can be added to the model and numerical implementation developed here, e.g., following the approach of \citeA{Noda2010}.  
+
+A number of authors have presented dislocation solutions and boundary integral formulations for poroelasticity \cite<e.g,>{Rice1976,Cheng1984,Cheng1988,Cheng1998,Song2017}. While these solutions have useful applications to fracture and faulting problems, they generally have not been formulated to account for processes where pressure inside the fracture or on the frictional surface may change. This limits applicability to a certain class of problems. 
+
+Here we present a spectral boundary-integral method (SBIM) and derive novel analytical spectral boundary integral solutions appropriate for faulting and induced seismicity problems in a poroelastic bulk where pressure inside a thin shear zone could be changing. The SBIM allows us to simulate quasi-dynamic slow and fast slip on a rate-and-state fault with dilatancy/compaction and fluid flow in a plane-strain poroelastic medium. We take a boundary layer approach where the outer solution, which is the spectral representation of the poroelastic bulk, treats the fault as a zero-thickness interface with suitable boundary conditions. However, the inner solution considers the fault to be a finite-width shear zone. We consider the frictional properties of the shear zone to be determined by their width-averaged properties. The bulk is an isotropic standard quasi-static Biot poroelastic solid with a hydraulic diffusivity $c$. The shear zone has frictional strength described by rate-and-state friction, with inelastic state-dependent dilatancy and compaction and anisotropic permeability: the permeability across the shear zone is different than the permeability along the shear zone. The inelastic state-dependent dilatancy and compaction of the shear zone are implemented using the \citeA{Segall1995} approach, as explained later. We frequently refer to this process only as ``dilatancy" for the sake of brevity, and that is also how it is commonly referred to in the fault mechanics community. However, we remind the reader that the ``dilatancy" law also predicts compaction under certain conditions. The pore pressure in the layer is simplified and assumed to be bi-linear where the two linear profiles are continuous at the center of the shear zone \cite<as in>[see also section \ref{sec:problem}]{Heimisson2021}. The spectral representation uses analytical convolution kernels, which are truncated for efficiency similar to \citeA{Lapusta2000}, but at time scales relevant for the bulk diffusion at the specific wavenumber.
+
+\citeA{Heimisson2021} presented an analytical and scaling analysis of a dilatant fault in a poroelastic medium under long terms steady-state loading, thus exploring the stability of such faults in the context of spontaneous event nucleation at steady-sliding conditions. That analysis was achieved by a linearized stability analysis around steady state and provided useful first-order insights into governing parameters of fault stability. Here we solve a much more general problem numerically, by developing a method that allows us to efficiently simulate the fully nonlinear response of such faults. For example, we can simulate fault response due to injection into the fault in a fully coupled manner, where we account for anisotropic shear zone diffusion, in-elastic dilatancy, coupling of shear zone and bulk, poroelastic response from fault leak-off into the bulk, and pore pressure coupling of slip. To date, such a multifaceted description of the fluid fault interaction problem has not been presented in an efficient boundary integral framework. 
+ 
+The paper first discusses the general problem setup (section \ref{sec:problem}). There we touch on the general features of the SBIM. In section \ref{sec:porosol}, a more mathematically rigorous description is presented. In section \ref{sec:porosol}, we provide the analytical spectral boundary-integral solutions for sliding and opening of an interface in a plane-strain poroelastic solid. The numerical approach taken to solve the coupled problem with dilatancy, compaction, and injection in a poroelastic solid is described in section \ref{sec:num}, where we first discuss the inversion of the Fourier transform by introducing a spectral basis and then convolution truncation. We show an application of the SBIM (section \ref{sec:app}), where we use constraints from a field experiment \cite{Guglielmi2015} and a recent numerical study that modeled the field experiment data \cite{Larochelle2021}. Section \ref{sec:disc} contains a discussion on the role of poroelasticity, and other fluid-based mechanisms, in the dynamics of injection-induced seismic and aseismic slip. Finally the Appendix contains details on parameters choices (A), the time-stepping algorithm (B), and numerical method validation (C).
+
+\subsection{Problem description} \label{sec:problem}
+
+The general problem setup can be divided into three domains. Two are isotropic poroelastic half-spaces, which we call the bulk, one in $y>\epsilon$ region and the other in $y<-\epsilon$ region. The third is a shear zone made from fault gouge, which separates the two half-spaces (Figure \ref{fig:schema}a). The two poroelastic half-spaces are assumed to have the same material properties, which we characterize with the shear modulus $G$, Skempton's coefficient $B$, drained Poisson's ratio $\nu$, undrained Poisson's ratio $\nu_u$, and hydraulic diffusivity $c$ \cite<e.g.,>{Cheng2016,Detournay1993,Rice1976}. In some cases, other poroelastic parameters may be displayed for compactness, legibility, and intuition. However, the implementation of the method we present uses the aforementioned five.
+
+Between the two poroelastic half-spaces is the third domain that we call the shear zone ($-\epsilon < y < \epsilon$). We do not consider the shear zone to be specifically a poroelastic material, but rather fluid-filled frictional elasto-plastic granular gouge. The elastic behavior of the shear zone is described with various compressibility relationships that affect the fluid and solid phase mass balance of the gouge. This is elaborated on in section \ref{sec:fluid} and \ref{sec:solid} as well as in \citeA{Heimisson2021}. Similar description was developed by \citeA{Segall1995}. Here we present a more complex physical system than \citeA{Segall1995}, which includes total normal stress changes and fault perpendicular displacements. Thus, a more elaborate description is needed. This includes considering material compression under uniaxial normal stress. While defining a uniaxial compressibility is not often done, such compressiblity has been useful in problems related to stress transfer on faults in elastic and poroelastic medium \cite{Cocco2002}.
+
+Now we briefly review the most relevant parameters related to the shear zone description; a more complete mathematical description is provided in Section \ref{sec:gov}. The shear zone is a thin layer of half-width $\epsilon$. Here thin indicates that $\epsilon$ should be much smaller than any significant variation in fields, such as slip or pressure, along the $x$-axis. This assumption is fundamental for the accuracy of the boundary-layer treatment of the shear zone.  The properties of the shear zone or fault gouge are characterized by reference porosity $\phi_0$, inelastic dilatancy coefficient $\gamma$ \cite{Segall1995}, and pore pressure and normal stress dependent void volume compressibilities $\beta_n^p$ and $\beta_n^\sigma$. In addition, the intact gouge material compressibilities are $\beta_g^p$ and $\beta_g^\sigma$, and the fluid compressibilities are  $\beta_f^p$ and $\beta_f^\sigma$, where the $\beta$-coefficients represent linearized relationships between changes in volume and stress and pressure. These relationship can be considered as representing contribution of elastic or reversible processes, for example, $\beta_n^p$ and $\beta_n^\sigma$ describe the elastic component of the porosity change. 
+
+The frictional strength of the shear zone is determined by the reference coefficient of friction $f_0$, the characteristic state evolution distance $D_{RS}$, the constitutive parameter $a$ that scales the direct rate dependence of friction, and the constitutive parameter $b$ that scales the state dependence of friction. A similar description of a shear zone was developed in \citeA{Heimisson2021}, but here we include more physical processes that alter shear zone fluid flow. First, we consider that there may be a source of fluid mass in the layer, for example by injection, indicated by $Q$. Second, we include an anisotropic mobilities $\kappa_{cx}$ and $\kappa_{cy}$ (defined as permeability over dynamic fluid viscosity) assuming Darcy flow. In particular, the mobility in the $y$ direction, $\kappa_{cy}$ can be different from the mobility in the $x$ direction $\kappa_{cx}$. Thus, fluids injected into the fault have multiple migration paths, along the shear zone, perpendicular to the shear zone, and in both $x$ and $y$ directions in the bulk. Furthermore, an increase in pore pressure in the bulk can migrate into the shear zone and also to the bulk on the other side (Figure \ref{fig:schema}a).
+
+In terms of geological description of fault-zone permeability structures, our setup falls best in the category of a localized conduit as identified by \citeA{CaineEvans}. That is a fault without a significant damage zone or fault core. Such simple faults are particularly relevant for field-scale fault injection experiments and have been targeted in previous experiments \cite{Guglielmi2015} and will be targeted in future \cite{Ma2022} experiments. We suggest, however, that our problem setup could be reinterpreted and applied to a larger class of problems with minor modifications. For example, the shear zone could be interpreted to represent any thin diffusive structure that may undergo shear or dilatation. Thus our solutions, in particular the spectral boundary integral solutions, have a wider applicability than presented here and could be applied to problems related to damage zones or fault cores.
+
+\begin{figure}[H]
+\includegraphics[scale = 0.85]{Figures/schema2.pdf} % this command will be ignored
+\caption{Schematic overview of the problems setup and possible pore pressure profiles scenarios in the shear zone. {\bf a} Injection occurs in a thin shear zone embedded between two poroelastic halfspaces of the same properties. This injection causes fluid migration along the shear zone, across the shear zone, and into the bulk. The evolving pore fluid pressure leads to slip across the shear zone by reducing effective normal stress. {\bf b} Pore pressure profiles that can occur during the propagation of a single rupture induced by injection. If the pore pressure diffusion is ahead of the rupture, then the shear zone has increased pressure compared to background (right-most profile). However, inelastic dilatancy may reduce the pressure. We call this a dilatancy dominated pore pressure (left-most profile). Between the two cases of injection and dilatancy dominated regimes, we expect at or near the rupture tip the two effects may cancel. However, the compression and dilation of the host rock induced by the inhomogeneous slip can significantly change the pore pressures on either side of the shear zone ($p^+$ and $p^-$). Fluid mass is introduced in practice as an arbitrary source term $Q(x,t)$ (see section \ref{sec:fluid}). The isolated pipe serves only visualization purposes.}
+\label{fig:schema}
+\end{figure}
+
+
+\subsection{Motivation}
+ A key question in induced seismicity is to understand when so-called runaway ruptures happen, that is ruptures that propagate well outside a pressurized region. This is a useful focal point to explain some of the general dynamics that we expect from the described problem above. When injection into a fault occurs, there are two important length scales along the $x$ dimension (Figure \ref{fig:schema}) that can interact and explain the dynamics of the slip. First, how far the pressure front from the injection site has diffused, which we can define as the region of significantly elevated pore pressure. Second, how far the rupture tip has propagated, which can be understood as the region of significant fault slip. If a fault has relatively low shear stress, i.e., its shear stress over initial effective normal stress is significantly below its reference friction coefficient, or is well-healed, which may be common in injection experiments, the pore pressure front controls how far the rupture tip can move since the frictional resistance is too great outside the pressure front \cite<e.g.,>{Larochelle2021}. However, if a fault is relatively well-stressed, or if the slipping region enters a more well-stressed portion of the fault or a portion of the fault with lower friction, then the rupture may become self-sustained and rupture outside the pressure front. Thus the rupture may initially be contained by the pressure front, but evolve to become a runaway rupture.
+
+The interplay of the rupture tip and pressure front provides a useful qualitative explanation of the transition from a confined to runaway rupture. However, additional complexity,
+which is related to the pressure profile across the fault, plays an important role in determining the if, when or how such a rupture can happen. If a rupture is initiated in a shear zone by injection, the pressure profile across the shear zone (i.e. pressure change with $y$, Figure \ref{fig:schema}{\bf b}) can be dominated by different mechanisms depending on whether observing the profile at a $x$ coordinate that is ahead of the rupture, at the tip or behind the tip (Figure \ref{fig:schema}b ). This is particularly prominent for an in-plane rupture direction due to the volumetric straining of the bulk. If the pressurized zone is ahead of the rupture, the shear zone central pressure ($p_c$) would be elevated. The pore pressures adjacent to the shear zone ($p^+$ and $p^-$) would also be elevated due to the leak-off into the bulk. Near the tip region, the influence of dilatancy starts to lower the pore pressure $p_c$, but furthermore volumetric straining of the bulk causes an increase in pore pressure on the compressive side ($p^+$) and decrease on the dilating side ($p^-$) due to poroelastic coupling. Finally, behind the tip, dilatancy may have further reduced the pressure $p_c$ and possibly reversed the sign compared to the background equilibrium pressure and caused flow back into the shear zone. We thus suggest that, in order to model rupture propagation, earthquake nucleation, and understand runaway ruptures in a fluid-saturated medium due to injection, we must consider coupling that arises from the interplay of several mechanisms that alter the pore pressure.
+
+\section{Governing equations} \label{sec:gov}
+This section describes the conservation laws, friction laws, and boundary conditions. 
+
+\subsection{Poroelastic Bulk}
+
+The quasi-static theory of poroelasticity can be described as four coupled partial differential equations written in terms of displacements $u_i$ and fluid pressure changes $p$ relative to an equilibrium pressure state \cite<e.g.,>{Detournay1993,Cheng2016}:
+
+\begin{equation}
+G  u_{i,kk} + \frac{G}{1-2\nu} u_{k,ki} = \alpha p_{,i}
+\label{eq:G1}
+\end{equation} 
+and
+
+\begin{equation}
+\frac{1}{M} p_{,t} - \kappa p_{,kk} = - \alpha u_{k,kt},
+\label{eq:G2}
+\end{equation}
+\noindent
+where the material parameters are as follows: $G$: shear modulus, $\nu$: drained Poisson's ratio, $\alpha$: Biot-Willis parameter, $M$: Biot modulus, and $\kappa$ is the mobility  (the ratio between the permeability and fluid viscosity). In later expressions, a different set of poroelastic material parameter may be used for compactness and increased intuition, in particular Skempton's coefficient $B$ and undrained Poisson's ratio $\nu_u$. The Biot modulus $M$ may not be as well know as the others, but it is defined as the change in amount of fluid per unit change in pressure at constant volumetric strain. It is inversely proportional to the storage coefficient. The Biot modulus offers a simple and useful relationship between mobility and hydraulic diffusivity in the poroelastic medium by $c = \kappa M$. This relationship can also be written without $M$ as:
+
+\begin{equation}
+c = \kappa \frac{2 G B (1+\nu) }{3 \alpha (1 - \alpha B) (1 - 2 \nu)}.
+\label{eq:c(kappa)}
+\end{equation}
+
+Skempton's coefficient $B$ and undrained Poisson's ratio $\nu_u$ can be related to the other aforementioned set of 5 parameters via:
+
+\begin{align}
+    B & = \frac{3M\alpha(1-2\nu)}{2G(1+\nu) + 3M\alpha^2(1-2\nu)} , \\
+    \nu_u & = \frac{2G\nu + M \alpha^2(1-2\nu)}{2G + 2M \alpha^2(1-2\nu)}.
+\end{align}
+Finally, Skempton's coefficient can then be expressed simply in terms of Poisson's ratios and the Biot-Willis parameter:
+
+\begin{equation}
+    B = \frac{3(\nu_u - \nu)}{\alpha (1-2\nu) (1+\nu_u)} .
+    \label{eq:B(alpha)}
+\end{equation}
+
+In this work, we assume plane strain deformation, in which case the governing equations can be reduced to three. Further simplification and decoupling of the governing equations is possible by using the McNamee-Gibson displacement functions \cite{Mcnamee1960,Verruijt1971}. In obtaining solutions to equations (\ref{eq:G1}) and (\ref{eq:G2}), we follow the strategy explained in the Appendix of \citeA{Heimisson2019} using the McNamee-Gibson displacement functions but using the boundary conditions listed in the next section.
+
+\subsubsection{Boundary conditions} \label{sec:bc}
+
+We apply the following boundary conditions at the interface, i.e. the shear zone, and at infinity.
+
+\begin{align}
+& \lim_{y \rightarrow 0^\pm} u^+_x - u^-_x = \delta_x, \\
+& \lim_{y \rightarrow 0^\pm} u^+_y - u^-_y = \delta_y, \\
+& \lim_{y \rightarrow \pm \infty} u^\pm_x = 0 \text{ and } u^\pm_y = 0 , \\
+& \lim_{y \rightarrow \pm \infty} p^\pm = 0, \\
+& \lim_{y \rightarrow 0^\pm} \sigma^+_{xy} - \sigma^-_{xy} = 0, \\
+& \lim_{y \rightarrow 0^\pm} \sigma^+_{yy} - \sigma^-_{yy} = 0,
+\end{align}
+where we have dropped the index notation and used $x$ and $y$ (as represented in Figure \ref{fig:schema}a). The first two reflect displacement discontinuities, that is slip $\delta_x$ (Mode II) and opening (or layer dilation) $\delta_y$ (Mode I). The third and fourth conditions require the fields to decay at infinity. The final two conditions enforce continuity of stresses across the interface or the shear zone.  
+
+The pore pressure in the shear zone is assumed to be bi-linear  \cite{Heimisson2021}. In other words, we parameterize the pore pressure as two linear profiles that are fully constrained by the pore pressure at the center $p_c$ at $y=0$ and the pressure at the shear zone boundaries where the poroelastic bulk meets the shear zone, that is, $p^\pm$ at $y = \epsilon^\pm$ (Figure \ref{fig:schema}). We can explicitly write out the assumed pore pressure profile as:
+
+\begin{align}
+    p(y) = & \frac{y}{\epsilon}(p^+ - p_c) + p_c \text{\quad if } 0 < y < \epsilon \nonumber \\ 
+    p(y) = & \frac{y}{\epsilon}(p_c - p^-) + p_c \text{\quad if } - \epsilon < y < 0 .
+    \label{eq:linear}
+\end{align}
+This parameterization can also be considered as a generalization of the leaky interface used in the plane strain dislocation solution of \citeA{Song2017}. Assuming this functional form for the pore pressure in the shear zone offers two main benefits. First, we can fully reduce the dimension of the shear zone in a computational sense, meaning that we only need to simulate a 1D problem, although we incorporate 2D physics. This is the general idea of boundary integrals in solutions of partial differential equations and it is indeed how we treat the bulk physics (the outer solution). It is also desirable to extend this dimension reduction to the shear zone physics, which is the inner solution of the boundary layer treatment. Second, if the layer is indeed thin, we may expect the across-shear-zone pressure profile to evolve to linear profiles since such a profile would satisfy the quasi-static limit of a standard diffusion equation. We can thus expect a more general solution, without a dimensional reduction, to evolve to the bilinear profile. How fast that evolution occurs would depend on $\epsilon$ and $\kappa_{cy}$ and needs more work to quantify. That being said, we stress that a rigorous treatment of this problem without dimensional reduction in 2D is a fruitful and important topic for future work. We suggest that our approach is a good starting point for accounting for pressure being variable in the shear zone, which is mostly considered to be a constant in other simplified treatments.
+
+Assuming the bi-linear pressure parameterization and equating the fluid mass flux into the shear zone and in the bulk, and vice versa, gives rise to a pressure gradient boundary condition for the bulk:
+
+\begin{equation}
+ \left. \frac{d p^\pm}{d y} \right|_{y = 0^\pm} = \pm \frac{\kappa_{cy}}{\kappa} \frac{(p^\pm - p_c)}{\epsilon},
+ \label{eq:BC}
+\end{equation}
+where $\kappa_{cy}$ is the shear zone mobility in the $y$ direction and $\kappa$ is the poroelastic bulk mobility related to the bulk hydraulic diffusivity by $c = M\kappa$.
+
+We highlight that boundary conditions for the bulk are applied at $y = 0^\pm$ but, in the description of the shear zone, we treat it as a finite layer with thickness between $y = \pm \epsilon$. This is because we take a boundary layer approach \cite<similar to Appedix B of>{Rudnicki2006} where the inner solution, the shear zone, is assumed to have a finite thickness. However, the outer solution, the bulk, approximates the layer as having an infinitesimal thickness. Thus the assumption that any variation along the length of the shear zone occurs over a length scale much smaller than $\epsilon$ is implicit. In other words, we always require that $\epsilon k \ll 1$, with $k$ representing the wavenumber (inverse of a wavelength) of any field that varies along the $x$-dimension.
+
+\subsection{Frictional properties}
+
+We represent the frictional strength of the layer in an averaged sense (as in \citeA{Heimisson2021}). We assume that the frictional strength of every point in the layer can be represented as follows:
+
+\begin{equation}
+\frac{\tau(x,t)}{\sigma(x,t) - p(x,y,t)} = f(x,y,t) \quad \text{ for } -\epsilon < y < \epsilon,
+\label{eq:totforce}    
+\end{equation}
+where $\tau(x,t)$ is the sum of all contributions to the shear stress, both initial background value and slip contributions. We note that the shear stress is assumed to be spatially constant across the layer. $\sigma(x,t)$ represents background initial effective normal stress (normal stress minus the ambient pore pressure) plus the slip-induced changes in normal stress and it is also assumed to be spatially constant across the layer. However, we separate from $\sigma(x,t)$ the perturbation in pore pressure $p(x,y,t)$ since, as previously discussed, it cannot be assumed to be constant in $y$. Using equation (\ref{eq:linear}) and averaging over the layer, we obtain:
+
+\begin{equation}
+\tau \frac{ ( p_c - p^+ ) \log \left( \frac{\sigma - p^-}{\sigma - p_c} \right) +  (p_c - p^- ) \log \left( \frac{\sigma - p^+}{\sigma - p_c} \right) }{2 (p_c - p^-) (p_c - p^+)} = \langle f \rangle ,
+\label{eq:totforceave}    
+\end{equation}
+with $\langle f \rangle$ representing the frictional coefficient of the layer. We have explored using the equation above for modeling the interface frictional strength, but we find that it renders results similar to a linearized approximation valid in the limit of the pore pressure changes being small compared to the background normal stress:
+
+\begin{equation}
+  \tau = ({\sigma}- \langle p(t) \rangle  ) \langle f \rangle,
+    \label{eq:RSFL}
+\end{equation}
+where $\langle p(t) \rangle$ is the average pressure across the layers and can be computed directly
+
+\begin{equation}
+    \langle p \rangle = \frac{1}{2 \epsilon} \int_{-\epsilon}^{\epsilon} p(y) dy = \frac{1}{2} \left( p_c  + \frac{p^+ + p^-}{2} \right).
+    \label{eq:avep}
+\end{equation}
+Equation (\ref{eq:RSFL}) further offers a simpler interpretation of the role of the pore pressure in the effective normal stress compared to equation (\ref{eq:totforceave}), which helps to understand the simulation results.
+
+ We interpret the averaged friction coefficient $\langle f \rangle$ of the shear zone as being represented by the rate-and-state friction law \cite<e.g.,>{Dieterich1979,Ruina1983,Marone1998}:
+
+\begin{equation}
+  \langle f \rangle = \frac{1}{2 \epsilon} \int_{-\epsilon}^{\epsilon} f(x,y,t) d y = a \text{arcsinh} \left[ \frac{V}{2V_0} \exp \left(  \frac{f_0 + b \log (V_0 \theta/D_{RS})}{a} \right)   \right],
+    \label{eq:avef}
+\end{equation}
+where we use the regularized form of the friction law that is also valid for slip speeds $V$ much smaller than the reference slip speed $V_0$ \cite{Rice1996,BenZion1997,Lapusta2000}. Here $a$ and $b$ are constitutive parameters that describe the rate dependence and state dependence of friction, respectively. Further, $f_0$ is the reference coefficient and $D_{RS}$ is the characteristic slip distance over which the state evolves. The state variable is described by the aging law \cite{Ruina1983}:
+
+\begin{equation}
+    \frac{d \theta}{d t} =  1 - \frac{\theta V}{D_{RS}}. 
+    \label{eq:aging}
+\end{equation}
+
+We note that here we introduce a difference to the treatment of the frictional properties of the shear zone in \citeA{Heimisson2021}. Here we represent friction using the regularized friction law whereas the non-regularized version was discussed by \citeA{Heimisson2021}.  In the linearized analysis treated by \citeA{Heimisson2021}, there is no difference between the two versions.  
+
+\subsection{Shear Zone}
+
+Here we analyze the fluid and solid constituent mass balance of the shear zone gouge. Although we offer a complete description of the governing equations, we highlight that more details may be found in \citeA{Heimisson2021}. Note that we build upon the shear zone description of \citeA{Heimisson2021} and introduce several new processes. 
+
+\subsubsection{Fluid mass balance} \label{sec:fluid}
+
+Beyond previous work \cite{Heimisson2021}, we introduce two additional physical processes to the fluid mass balance of the shear zone. The two processes incorporate an injection or source term and allow for lateral diffusion along the shear zone .
+
+Within the shear zone, the fluid mass balance is:
+
+\begin{equation}
+    \frac{\partial m}{\partial t} + \frac{\partial q_y}{\partial y} + \frac{\partial q_x}{\partial x}  = \frac{\partial}{\partial t} ( Q(x,t) ),
+    \label{eq:cons}
+\end{equation}
+where $m$ is the fluid mass content, $q_y$ is fluid mass flux perpendicular to the fault (y-axis), $q_x$ is the fluid mass flux parallel to the fault (x-axis), and $Q(x,t)$ is the cumulative fluid mass injected per unit volume of the shear zone.
+
+We note that $m =  \rho_f n$, where $\rho_f$ is fluid density, and we follow \citeA{Segall1995} in assuming that the total void volume fraction can be described as $n = n^e + n^{pl}$, that is the sum of elastic and plastic void volume fraction. The rate of change in fluid mass fraction is then:
+
+\begin{equation}
+    \dot{m} = \dot{\rho}_f n + \rho_f \dot{n}.
+    \label{eq:dotm}
+\end{equation}
+Following \citeA{Heimisson2021}, we linearize $\dot{n}^e = \phi_0 (\beta_n^p \dot{p} - \beta_n^{\sigma} \dot{\sigma} )$ and $\dot{\rho}_f = \rho_{fo}(\beta_f^p \dot{p} + \beta_f^\sigma \dot{\sigma} )$, where $\beta_f^p$ and $\beta_n^p$ are fluid and elastic void compressibilities respectively and $\sigma > 0$ means increased compression, also know as ``the compression positive'' convention. The reference compressibilities are defined at the reference void volume fraction $\phi_0$ and fluid density $\rho_{fo}$. We assume the reference void volume fraction is the same as the porosity. Similarly, we assume plastic void fraction is equal to the plastic porosity: $n^{pl} = \phi^{pl}$. Thus equation (\ref{eq:dotm}) becomes: 
+
+\begin{equation}
+    \dot{m} = \rho_{fo} \phi_0 (\beta_f^p \dot{p} + \beta_f^\sigma \dot{\sigma} ) + \rho_{fo} \phi_0 (\beta_n^p \dot{p} - \beta_n^{\sigma} \dot{\sigma} + \dot{\phi}^{pl}/\phi_0 ).
+    \label{eq:mdot}
+\end{equation}
+Darcy's law provides:
+
+\begin{equation}
+    q_x =   - \rho_{fo} \kappa_{cx}\frac{\partial p}{\partial x},
+    \label{eq:Darcyx}
+\end{equation}
+where $\kappa_{cx}$ is the mobility (permeability over dynamic viscosity) for fluid flux along the x-axis within the shear zone, which is assumed to be spatially constant with respect to $x$.
+
+Combining equations (\ref{eq:cons}), (\ref{eq:mdot}), and (\ref{eq:Darcyx}) and integrating with respect to the y-axis gives:
+
+\begin{equation}
+    2 \epsilon \rho_{fo} \phi_0 \left[ (\beta_f^p + \beta_n^p ) \langle \dot{p} \rangle + (\beta_f^\sigma - \beta_n^{\sigma}) \dot{\sigma} + \langle \dot{\phi} \rangle^{pl}/\phi_0 ) \right] + q_y^+ - q_y^- - 2 \epsilon \rho_{fo} \kappa_{cx} \frac{\partial^2 \langle p \rangle}{\partial x^2}  = 2 \epsilon \dot{Q}(x,t),
+\end{equation}
+where the source term $Q$ is assumed constant with respect to $y$. 
+
+Inserting for the fluid mass flux in $y$ direction, given the bi-linear pressure distribution, in the shear zone (equations (\ref{eq:BC}) and (\ref{eq:linear})) provides:
+
+\begin{equation}
+      \langle \dot{p} \rangle + \frac{\beta_f^\sigma - \beta_n^{\sigma}}{\beta_f^p + \beta_n^p } \dot{\sigma}    =  - \frac{\langle \dot{\phi} \rangle^{pl}}{\phi_0 (\beta_f^p + \beta_n^p )} + \frac{\kappa_{cy}}{\epsilon^2 \phi_0(\beta_f^p + \beta_n^p )} (\frac{1}{2}(p^+ + p^-) - p_c) + \frac{\kappa_{cx}}{\phi_0(\beta_f^p + \beta_n^p) } \frac{\partial^2 \langle p \rangle}{\partial x^2} + \frac{\dot{Q}(x,t)}{\rho_{fo}\phi_0(\beta_f^p + \beta_n^p)}.
+     \label{eq:pc}
+\end{equation}	
+We have thus derived an equation that relates average pressure, normal stress, dilatancy, along shear zone diffusion, and fluid mass injection. The inelastic change in porosity $\phi^{pl}$ is taken as
+
+\begin{equation}
+    \langle \phi \rangle^{pl} = \phi_0^{pl} -  \gamma \log \left( \frac{V_0 \theta}{D_{RS}} \right),
+    \label{eq:phidil}
+\end{equation}
+where $\phi_0^{pl}$ could reflect an initial value of the inelastic porosity change. However, such a constant could also be interpreted as a part of the reference porosity $\phi_0$.
+Equation (\ref{eq:phidil}) is based on \citeA{Segall1995} and \citeA{Segall2010b}, which proposed that the inelastic porosity is a function of the frictional state variable, $\phi^{pl} (\theta)$, based on analyzing experimental data by \citeA{Marone1990}. We assume here that the frictional state variable $\theta$ is related to the average porosity change in the shear zone. The other approach is to relate the porosity change to the instantenous slip rate $\phi^{pl} (V)$, but both interpretations of the \citeA{Marone1990} data are equivalent when linearized around steady-state sliding. The interpretation of linking inelastic dilatancy and state has gained more observational support recently where experiments by \citeA{Proctor2020} suggest that the state variable and dilatancy are directly linked. \citeA{Proctor2020} suggest the state could be cast as dilatancy or vice versa as is reflected by equation (\ref{eq:phidil}). It is worth noting that although the experiments by \citeA{Proctor2020} show agreement with the \citeA{Segall1995} dilatancy relationship based on the experimental work of \citeA{Marone1990}, more complex behavior emerges at higher velocity steps. Equation (\ref{eq:phidil}) does thus not offer a complete description of how fault gouge dilatancy and compaction evolve, an important question that requires future experimental and theoretical study.
+
+Before implementing equation (\ref{eq:pc}) numerically, we analytically integrate it to obtain:
+
+\begin{equation}
+      \langle {p} \rangle + \frac{\beta_f^\sigma - \beta_n^{\sigma}}{\beta_f^p + \beta_n^p } {\sigma}    = \frac{1}{\phi_0(\beta_f^p + \beta_n^p)} \left( \frac{{Q}(x,t)}{\rho_{fo}}  - \langle {\phi} \rangle^{pl} +  \int_0^t \frac{\kappa_{cy}}{\epsilon^2} (\frac{1}{2}(p^+ + p^-) - p_c) + \kappa_{cx} \frac{\partial^2 \langle p \rangle}{\partial x^2} dt' \right),
+     \label{eq:pcI}
+\end{equation}	
+where it is assumed that all fields are 0 at $t=0$.
+
+\subsubsection{Solid gouge constituent mass balance} \label{sec:solid}
+
+Similar to the fluid mass balance (equation \ref{eq:cons}), we can state the conservation of solid mass (gouge material) in the shear zone:
+
+\begin{equation}
+    \frac{\partial m_g}{\partial t} + \frac{\partial}{\partial y} \left(  (1 - n) \rho_g \dot{u}_y \right) +  \frac{\partial}{\partial x} \left(  (1 - n) \rho_g \dot{u}_x \right) = 0,
+    \label{eq:conssolid}
+\end{equation}
+where $\rho_g$ is the density of the intact gouge and $u_x$ and $u_y$ are the $x$ and $y$ components of displacement of the gouge in the shear zone.
+
+The mass of the solid material (gouge) in a control volume within the shear zone is $m_g = (1-n)\rho_g$ and thus the rate of change in solid mass is given by
+
+\begin{equation}
+    \dot{m}_g =  - \rho_g \dot{n} + (1-n) \dot{\rho}_g.
+\end{equation}
+Following the same linearization proceedure and integration across the shear zone as before (see \citeA{Heimisson2021} for details on procedure and assumptions), we obtain a constitutive relationship for fault perpendicular displacements:
+
+\begin{equation}
+     \dot{\delta}_y =  2 \epsilon \left( \frac{ \phi_0 }{1 - \phi_0} \beta_n^p - \beta_g^p \right) \left[  \langle \dot{p} \rangle  - \frac{ \left( \frac{ \phi_0 }{1 - \phi_0} \beta_n^{\sigma}  +    \beta_g^\sigma \right)}{\left( \frac{ \phi_0 }{1 - \phi_0} \beta_n^p - \beta_g^p \right)} \dot{\sigma}  \right] + 2 \epsilon \frac{ \langle \dot{\phi} \rangle^{pl}}{1 - \phi_0}.
+\end{equation}
+Assuming that that all fields are zero at $t=0$, such that no net dilatancy or compaction occurs, then the equation can be integrated
+
+\begin{equation}
+     {\delta}_y =  2 \epsilon \left( \frac{ \phi_0 }{1 - \phi_0} \beta_n^p - \beta_g^p \right) \left[  \langle {p} \rangle  - \frac{ \left( \frac{ \phi_0 }{1 - \phi_0} \beta_n^{\sigma}  +    \beta_g^\sigma \right)}{\left( \frac{ \phi_0 }{1 - \phi_0} \beta_n^p - \beta_g^p \right)} {\sigma}  \right] + 2 \epsilon \frac{ \langle {\phi} \rangle^{pl}}{1 - \phi_0}.
+     \label{eq:dy}
+\end{equation}
+
+In the parameter regime studied in this paper (Appendix A), we do not expect the $\delta_y$ mode I displacements to be significant, but we include this here for completeness and because this effect is included in the computational code that accompanies this paper \cite{elias_rafn_heimisson_Poro_SBIM}. More information on the parameter regime when opening mode contributions can significantly influence fault slip is discussed in \citeA{Heimisson2021}.
+
+
+\section{Solutions for a Poroelastic Bulk Coupled to a Shear Zone} \label{sec:porosol}
+
+
+Let us develop solutions in the Fourier-Laplace domain given the boundary conditions in section \ref{sec:bc}. We define the joint Fourier-Laplace transform: 
+
+\begin{equation}
+\bar{\hat{\delta}}_x(s,k) = \int_{0}^{\infty} \int_{-\infty}^{\infty} \delta_x(t,x)
+e^{-ikx-st} dx dt ,
+\label{eq:LF}
+\end{equation}
+applied here on the slip $\delta_x(x,t)$, or displacement discontinuity across the layer in the $x$ direction, where the bar symbol represents the Laplace transform in time and the hat the Fourier transform along the $x$ spatial axis. Some symbols may not carry the hat symbol if they are explicitly written out in term in terms of the wavenumber $k$.
+	
+We follow the procedure outlined by \citeA{Heimisson2019} and derive solutions in the Fourier-Laplace domain for shear stress, pore pressure, and normal stress change at the slip surface ($y \rightarrow 0^\pm$). The relationships between change in shear stress $\bar{\hat{\tau}}'$, pore pressure change on either side of the layer $\bar{\hat{p}}^\pm$, and change in total normal stress $\bar{\hat{\sigma}}_{yy}$ in terms of $\bar{\hat{\delta}}_x$, $\bar{\hat{\delta}}_y$, and $\bar{\hat{p}}_c$ are given by the following equations \cite{Heimisson2021}:
+	
+\begin{equation}
+\bar{\hat{\tau}} = -  \frac{G |k| \bar{\hat{\delta}}_x}{2(1-\nu_u)} \bar{H}_1(s,k)
+\label{eq:tau}
+\end{equation}
+and
+
+\begin{equation}
+\bar{\hat{p}}^\pm = \mp \frac{ik G B \bar{\hat{\delta}}_x}{3} \frac{1+\nu_u}{1-\nu_u} \bar{H}_2(s,k) -  \bar{\hat{p}}_c \frac{\mathcal{F}}{\mathcal{F} + 1} \left( \bar{H}_2(s,k) - 1 \right) + \frac{|k| G B \bar{\hat{\delta}}_y}{3} \frac{1+\nu_u}{1-\nu_u} \bar{H}_2(s,k) ,
+\label{eq:p}
+\end{equation}
+and
+
+\begin{equation}
+\bar{\hat{\sigma}}_{yy} = \bar{\hat{p}}_c \frac{3 }{2 B (1 + \nu_u)} \frac{ \mathcal{F} }{\mathcal{F} + 1} (\bar{H}_1(s,k) - 1) - \frac{G |k| \bar{\hat{\delta}}_y}{2(1-\nu_u)} \bar{H}_1(s,k),
+\label{eq:sigyy}
+\end{equation}
+where
+
+\begin{equation}
+\bar{H}_1(s,k) = 1 - \frac{2(\nu_u - \nu)}{1-\nu} \frac{c k^2}{s} \frac{1 + \mathcal{F}}{\mathcal{F} + \sqrt{1+s/c k^2}}\left( \sqrt{1+s/c k^2} - 1 \right),
+\label{eq:H1}
+\end{equation}
+and
+
+\begin{equation}
+\bar{H}_2(s,k) = \frac{\sqrt{1+s/c k^2} - 1}{\sqrt{1+s/c k^2} + \mathcal{F}} .
+\label{eq:H2}
+\end{equation}
+$\mathcal{F}$ is a dimensionless group that characterizes the importance of flux across the fault:
+
+\begin{equation}
+\mathcal{F} = \frac{\kappa_{cy}}{\kappa} \frac{1}{|k|\epsilon} .
+\label{eq:F}
+\end{equation}
+
+In order to obtain the spectral boundary integral solutions, these solutions are not sufficient since we need to invert the Laplace transform. We begin this process by defining:
+
+\begin{equation}
+    \bar{K}_1 = \bar{H}_1 - 1 \text{ and } \bar{K}_2 = \bar{H}_2 - 1.
+\end{equation}
+As shown by \citeA{Heimisson2019}, $\bar{H}_1$ and $\bar{H}_2$ approach unity in the limit of short time or negligible diffusion, which reduces Eqs. (\ref{eq:tau}), (\ref{eq:p}), and (\ref{eq:sigyy}) to their corresponding undrained limits. $\bar{K}_1$ and $\bar{K}_2$ thus represent the transient changes in shear stress and pore pressure on the fault that arise due to pore pressure diffusion.
+
+$\bar{H}_1$ and $\bar{H}_2$ are related by $\bar{H}_1 = 1 - 2 (\nu_u - \nu)/(1 - \nu) (1 + \mathcal{F}) (c k^2/s) \bar{H}_2$. Thus, in the time domain, the inverse transform of $\bar{H}_1$ is closely related to the time integral of the inverse transform of $\bar{H}_2$. Using the convolution theorem for Laplace transforms, we find that Eqs. (\ref{eq:tau}) and (\ref{eq:p}) take the form:
+
+\begin{equation}
+\hat{\tau}' = -  \frac{G |k|}{2(1-\nu_u)} \left( \hat{\delta}_x + \int_0^t \hat{\delta}_x(t') K_1 (t - t',k) dt' \right),
+\label{eq:tauIL}
+\end{equation}	
+
+
+\begin{align}
+\hat{p}^\pm = & \mp \frac{ik  G B }{3} \frac{1+\nu_u}{1-\nu_u} \left( \hat{\delta}_x + \int_0^t \hat{\delta}_x(t') K_2 (t - t',k) dt' \right) - \frac{\mathcal{F}}{\mathcal{F} + 1} \int_0^t \hat{p}_c(t') K_2 (t - t',k) dt' \label{eq:pIL} \\ \nonumber
+& + \frac{|k| G B }{3} \frac{1+\nu_u}{1-\nu_u} \left( \hat{\delta}_y + \int_0^t \hat{\delta}_y(t') K_2 (t - t',k) dt' \right),
+\end{align}	
+
+ and equation (\ref{eq:sigyy}) becomes
+ 
+\begin{equation}
+\hat{\sigma}_{yy} = \frac{3 }{2 B (1 + \nu_u)} \frac{  \mathcal{F} }{\mathcal{F} + 1} \int_0^t \hat{p}_c(t') K_1(t-t',k) dt' - \frac{G |k| }{2(1-\nu_u)} \left( \hat{\delta}_y + \int_0^t \hat{\delta}_y(t') K_1 (t - t',k) dt' \right).
+\label{eq:sigyyIL}
+\end{equation}
+
+We have thus separated the undrained response and the transient diffusional behavior. This behavior is characterized by the convolution kernels $K_1$ and $K_2$ that represent the inverse Laplace transforms of $\bar{K}_1$ and $\bar{K}_2$ respectively. In other words, $K_1(t) =  \mathcal{L}^{-1} \left\{ \bar{K}_1 \right\} (t)$ and $K_2(t) =  \mathcal{L}^{-1} \left\{ \bar{K}_2 \right\} (t)$.
+
+The convolution kernels for fault slip problems in poroelastic medium can be be constructed numerically and this may be the only option for more complex bulk rheology such as accounting for full inertial effects \cite{Heimisson2022spectral}. The numerical inversion of the Laplace transform is, however, a difficult and numerically intensive task. Here we derived analytical expressions for $K_1$ and $K_2$ through repeated application of the convolution theorem to separate $\bar{K}_1$ and $\bar{K}_2$ into factors of known inverse Laplace transforms.
+
+\begin{align}
+ K_1(t,k) & =  - \frac{2 (\nu_u - \nu)}{1-\nu} c k^2 (1 + \mathcal{F}) \left( 1 + \frac{1}{\mathcal{F} - 1} \left[ \mathcal{F} e^{ (\mathcal{F}^2-1)c k^2 t } \text{erfc}\left( \mathcal{F}\sqrt{c k^2 t } \right) - \mathcal{F}  + \text{erf} \left( \sqrt{c k^2 t } \right)  \right]   \right) \label{eq:K1}  \\ 
+K_2(t,k) & =  - c k^2 (1 + \mathcal{F}) \left[ \frac{e^{-c k^2 t}}{\sqrt{\pi c k^2 t}} - \mathcal{F} e^{ (\mathcal{F}^2-1)c k^2 t } \text{erfc}\left( \mathcal{F}\sqrt{c k^2 t } \right)  \right]  \label{eq:K2}    .
+\end{align}	
+We note that kernel $K_2$ is singular when $t \rightarrow 0$. However, this is an integrable singularity and the convolution kernel can be integrated in the sense of taking a Cauchy principal value. $K_1$ and $K_2$ reveal directly that fluid transport in and into the bulk is governed by two characteristic timescales,
+
+\begin{equation}
+    t_{b} = \frac{1}{c k^2}
+    \label{eq:tb}
+\end{equation}
+
+and
+ 
+\begin{equation}
+    t_{f} = \frac{1}{\mathcal{F}^2 c k^2} = \frac{\kappa^2 \epsilon^2}{\kappa_c^2 c },
+    \label{eq:tf}
+\end{equation}
+where $t_b$ can be understood as a traditional length-scale-dependent diffusional time scale, while $t_f$ represents a scale of flux through and from the shear zone and is independent of the length scale as long as $k \epsilon \ll 1$ .
+
+Equations (\ref{eq:tauIL}), (\ref{eq:pIL}), and (\ref{eq:sigyyIL}) offer several other interesting insights into how the bulk couples to the shear zone. We first observe that shear stress only depends on the slip (equation \ref{eq:tauIL}). However, pore pressure at the interfaces between the shear zone and bulk (equation \ref{eq:pIL}) has a complex dependence on both slip and opening mode as well as the shear-zone center pressure $p_c$. In the limit $\mathcal{F} \rightarrow 0$, the pressure in the bulk and shear-zone center decouples. This could happen in the limit of $\kappa_{cy} \rightarrow 0$ or when the shear zone is impermeable for flux along the $y$ dimension. $\mathcal{F}$ depends on the mobility or permeability contrast of the bulk and shear zone $\kappa_{cy}/\kappa$, where bulk mobility $\kappa = c/M$ has been previously explained. But the requirement $\kappa_{cy}/\kappa \ll 1$ is not sufficient for fluids to remain in the shear zone because $\mathcal{F} \propto 1/|k|\epsilon$ (equation \ref{eq:F}) and $|k|\epsilon \ll 1$.
+Equation (\ref{eq:sigyyIL}) shows an interesting coupling to normal stress.  The relationship between opening mode $\delta_y$ and normal stress change is obvious;  however,  the coupling of shear zone center pressure $p_c$ to $\sigma_{yy}$ is a poroelastic response as fluids flow from the shear zone into the bulk. This coupling is removed if $\mathcal{F} \rightarrow 0$ and fluids cannot enter the bulk from the shear zone.
+
+In summary, equations (\ref{eq:tauIL}), (\ref{eq:pIL}), and (\ref{eq:sigyyIL}) represent analytical solutions for the shear stress, pore pressure (at shear zone boundary), and normal stress given a time-history of slip $\delta_x$, opening $\delta_y$ and/or shear zone center pore pressure $p_c$ which have been transformed in the wavenumber (Fourier) domain. Alternatively, these expressions represent analytical solutions for a single plane wave perturbation in slip $\delta_x$, $\delta_y$ and/or $p_c$ of generic form $f(t)\exp(ikx)$, where $f(t)$ is some time-dependent function. In section \ref{sec:Fser}, we use this property to construct general solutions for arbitrary histories of slip $\delta_x$, opening $\delta_y$ and/or shear zone center pore pressure $p_c$.
+
+\section{Numerical Method} \label{sec:num}
+
+\subsection{Fourier series representation of poroelastic relations}	\label{sec:Fser}
+
+We represent $\delta_x$, $\delta_y$ and $p_c$ as Fourier series
+
+\begin{equation}
+    \delta_x (x,t) = \sum_{n = -N/2}^{N/2 - 1} D_{x,n}(t) e^{ik_n x}, \quad k_n = \frac{2 \pi n}{\lambda},
+\end{equation}
+
+\begin{equation}
+    \delta_y (x,t) = \sum_{n = -N/2}^{N/2 - 1} D_{y,n}(t) e^{ik_n x}, \quad k_n = \frac{2 \pi n}{\lambda},
+\end{equation}
+
+and
+\begin{equation}
+    p_c(x,t) = \sum_{n = -N/2}^{N/2 - 1} P_n(t) e^{ik_n x}, \quad k_n = \frac{2 \pi n}{\lambda},
+\end{equation}
+where $N$ is even and equal to the number of points at which $\delta(x,t)$ and $p_c(x,t)$ are evaluated, and $\lambda$ represents the length of the simulation domain. The Fourier transform is given by 
+
+\begin{equation}
+    \hat{\delta}_x(k,t) = \sum_{n = -N/2}^{N/2 - 1} 2 \pi D_{x,n}(t) \delta_D(k - k_n),
+\end{equation}
+and corresponding relations exist for $\hat{p}_c$ and $\hat{\delta}_y$ where $\delta_D$ is the Dirac delta function. Inserting the transformed series into equations (\ref{eq:tauIL}), (\ref{eq:pIL}) , and (\ref{eq:sigyyIL}) and performing the trivial inverse Fourier transforms provide
+
+\begin{equation}
+\tau' = -  \frac{G}{2(1-\nu_u)}  \sum_{n = -N/2}^{N/2 - 1}   |k_n| \left(D_{x,n}(t) + \int_0^t D_{x,n}(t') K_1 (t - t',k_n) dt' \right) e^{ik_n x},
+\label{eq:tauS}
+\end{equation}	
+
+\begin{align}
+p^\pm =   \sum_{n = -N/2}^{N/2 - 1}  \bigg( \mp & \frac{i G B }{3} \frac{1+\nu_u}{1-\nu_u} k_n \left[ D_{x,n}(t) + \int_0^t D_{x,n}(t') K_2 (t - t',k_n) dt' \right] + \ldots \nonumber \\ 
+ & \frac{G B }{3} \frac{1+\nu_u}{1-\nu_u} |k_n| \left[ D_{y,n}(t) + \int_0^t D_{y,n}(t') K_2 (t - t',k_n) dt'  \right] - \dots \nonumber  \\ 
+& \left. \frac{  \mathcal{F}(k_n) }{\mathcal{F}(k_n) + 1} \int_0^t P_n(t') K_2 (t - t',k_n) dt'    \right) e^{ik_n x} ,
+\label{eq:pS}
+\end{align}	
+and
+
+\begin{align}
+\sigma_{yy} = \frac{3 }{2 B (1 + \nu_u)} \sum_{n = -N/2}^{N/2 - 1} \left( \frac{  \mathcal{F}(k_n) }{\mathcal{F}(k_n) + 1}  \int_0^t P_n(t') K_1(t-t',k_n) dt' \right. - \ldots \nonumber  \\
+\left. \frac{G}{2(1-\nu_u)} |k_n| \left[D_{y,n}(t) + \int_0^t D_{y,n}(t') K_1 (t - t',k_n) dt'\right]  \right) e^{ik_n x}.
+\label{eq:sigyyS}
+\end{align}
+	
+Testing and validation of this approach reveals that the first term of the pore pressure (Eq. \ref{eq:pS}) is prone to developing the Gibbs phenomenon in the presence of steep gradients. This may stem from  how the sign of the pore pressure depends on $k_n$ and not the absolute value of $|k_n|$ as for other terms. Oscillations, such as the Gibbs phenomena, are somewhat mitigated by the diffusional nature of the pore pressure where short-wavelength oscillations diffuse rapidly. However, a much improved convergence of the series in Eq. (\ref{eq:p}) and nearly complete removal of the Gibbs phenomenon can be achieved with a Lanczos sigma factor \cite{Duchon1979}:
+
+\begin{align}
+\label{eq:pSLanc}
+p^\pm =   \sum_{n = -N/2}^{N/2 - 1}  \bigg( \mp & \frac{i G B }{3} \frac{1+\nu_u}{1-\nu_u} k_n \text{ sinc} \left( \frac{n}{N/2} \right)  \left[ D_{x,n}(t) + \int_0^t D_{x,n}(t') K_2 (t - t',k_n) dt' \right] + \ldots \nonumber \\ 
+ & \frac{G B }{3} \frac{1+\nu_u}{1-\nu_u} |k_n| \left[ D_{y,n}(t) + \int_0^t D_{y,n}(t') K_2 (t - t',k_n) dt' \right] - \dots \nonumber  \\ 
+& \left. \frac{  \mathcal{F}(k_n) }{\mathcal{F}(k_n) + 1} \int_0^t P_n(t') K_2 (t - t',k_n) dt'    \right) e^{ik_n x} ,
+\end{align}	
+where $\text{sinc}(x) = \sin{ (\pi x)}/(\pi x)$ is the normalized sinc function. It is worth noting that an inverse FFT of the Fourier coefficients in equations \ref{eq:tauS}, \ref{eq:pS}, \ref{eq:sigyyS}, and \ref{eq:pSLanc}  is an efficient way to compute the stresses and pore pressure at each value of $x$.
+
+\subsubsection{Comparison to Song and Rudnicki (2017)}
+We partially validate the solutions in the previous section by comparing them to the analytical solution provided for a single edge dislocation on a leaky plane by \citeA{Song2017} (Figure \ref{fig:Song}). In the problem analyzed by \citeA{Song2017}, $\delta_x = \mathcal{H}(t)\mathcal{H}(-x)$ with $\mathcal{H}(\cdot)$ being the Heaviside step function, $\delta_y = 0$, $p_c = 0$, in which case $\sigma_{yy} = 0$. We use equations (\ref{eq:tauS}) and (\ref{eq:pSLanc}) after retrieving the Fourier series coefficients using a fast Fourier transform (FFT) algorithm of $\delta_x = \mathcal{H}(t)\mathcal{H}(-x)$ evaluated on a domain size ranging from $x = -50$ to $x = 50$ m. Comparison in Figure \ref{fig:Song} reveals excellent agreement between the two approaches.  Further discussion of the method validation is in Appendix C. 
+
+\begin{figure}[H]
+\includegraphics[scale = 0.8]{Figures/Pore_pressure_benchmark_SandR2017.pdf} % this command will be ignored
+\caption{Comparison of our solution based on equations (\ref{eq:tauS}) and (\ref{eq:pSLanc}) and the analytical solution (equations (A1) and (72) respectively) for a problem in \citeA{Song2017}. Colored lines represent the spectral boundary-integral solution and overlapping dashed black lines represent the \citeA{Song2017} solution. \textbf{a} Shear stress normalized by shear modulus $G$ near the dislocation edge (indicated in gray) of unit slip amplitude at three different times, which span approximately the undrained, drained limits as well as an intermediate stage. \textbf{b} Pore pressure change due to the same edge dislocation. Results are shown for $c = 1$ m$^2$/s, $B = 0.5$, $\kappa_{cy}/(\kappa \epsilon) = 1 $ m$^{-1}$, $\nu=0.15$, $\nu_u = 0.45$.}
+\label{fig:Song}
+\end{figure}
+
+
+
+
+
+
+\subsection{Convolution kernel computation and truncation}
+
+Along with time stepping all relevant equations, which is detailed in Appendix B, we update and calculate the convolution in equations (\ref{eq:tauS}), (\ref{eq:sigyyS}), and (\ref{eq:pSLanc}). In computing the convolution, we first compute kernel values at lag times $t_i$ for each wavenumber $k_n$, i.e. $K_1(t_i,k_n)$ and $K_2(t_i,k_n)$, where $t_i$ are selected to span a time interval from $\zeta_l \text{min} (t_b, t_f)$ to $\zeta_u \text{min} (t_b, t_f)$. In practice we take $\zeta_l = 10^{-6}$ and $\zeta_u = 20$ and $t_b$ and $t_f$ are the diffusion time-scales of the bulk and of the flux through the shear zone given by equations (\ref{eq:tb}) and (\ref{eq:tf}).
+
+We thus evaluate the convolution kernels between a time that is negligible compared to the diffusional time-scales $\zeta_l \text{min} (t_b, t_f)$, up to a time that is long compared to the diffusional time scales $\zeta_u \text{min} (t_b, t_f)$. Evaluation points $t_i$ are selected by combining both points at a linearly equally spaced times, and logarithmically equally spaced times. Here we use 1024 evaluation points, but we find that in some cases, such as the benchmarking against the linear stability analysis of \citeA {Heimisson2021}, much fewer evaluation points are needed.
+
+Since we pre-compute the convolution kernels, we need to determine the values of the Fourier coefficients $D_{x,n}$, $D_{y,n}$, $P_{n}$ at times $t-t_i$. This is done by storing the Fourier coefficients' values at selected times and then determining their values at the convolution times $t_i$ by linear interpolation. 
+
+The criteria for storing a Fourier coefficient value are implemented by setting an integer $N_{st}$, which is the maximum number of time-steps that can be taken without storing the Fourier coefficients. We compute 
+
+\begin{equation}
+   N_{st} = \left \lfloor \min ( 1 + \min(t_f,t_b)/ \Delta t ; 1 + \min(a  \sigma_0 / (p_c^n - p_c^{lst} ) )/20;  N_{st}^{\max}  ) \right \rfloor,
+\end{equation}
+where $p_c^{lst}$ is the vector of $p_c$ values when the Fourier coefficients were last stored and  $N_{st}^{\max}$ is a user-determined value that makes sure the coefficients are sampled at least every $N_{st}^{\max}$ time-step. The first criterion in the equation makes sure that the minimum diffusion time is resolved in the stored Fourier coefficients. Testing has suggested that under-sampling here may not be an issue since the shortest diffusion times correspond to the largest wavenumbers (shortest wavelengths) and if the simulation is well resolved, then the influence of these wavelengths is negligible. The second criterion makes sure that if the pore pressure is changing rapidly, then the information of these rapid changes is preserved in the stored coefficients. This is particularly important for injection problems. However, for efficiency, we overwrite the value above for $N_{st}$ if $t^n - t^{lst} < \zeta_l \text{min} (t_b, t_f)$, where $t^{lst}$ is the time when the coefficients were last stored, in which case we set $N_{st} = N_{st}^{\max}$. This procedure makes sure that we do not store coefficients over time scales too short for any diffusional process to occur, making the seismic phase of the simulations much more efficient. 
+
+\section{Application} \label{sec:app}
+
+Here we show an application of the numerical approach by simulating the \citeA{Guglielmi2015} experiment, in which fluid was injected into a shallow fault and slip and pressure were monitored. The code (available here \cite{elias_rafn_heimisson_Poro_SBIM}) uses the spectral boundary integral solution, shear zone constitutive relationship, and a numerical method to simulate slow and fast slip on a rate-and-state fault in a poroelastic medium. 
+
+The slip and pressure data were previously analyzed by \citeA{Larochelle2021} by modeling 1D diffusion in a plane strain linear elastic bulk with rate-and-state friction. We use their parameter estimates (see also table \ref{symbolstable}) and their simplified pore pressure history (Figure \ref{fig:leak}a) as input, but we vary some of other processes and parameters that were not accounted for by \citeA{Larochelle2021}, or in most comparable studies, including poroelastic properties, bulk diffusivity, and inelastic dilatancy. Specifically, we explore a set of parameters where the bulk hydraulic diffusivity is $c = 4\cdot$10$^{-8}$ or 4$\cdot$10$^{-7}$ m$^2$/s; the undrained Poisson's ratio is $\nu_u = $0.262 or 0.35 (while the drained Poisson's ratio $\nu$ is 0.24); and the dilatancy coefficient takes values $\gamma = $0 , 1.7$\cdot$10$^{-5}$, and 1.7$\cdot$10$^{-4}$. We implement the injection by setting $Q(x,t) = Q_s(x) Q_t(t)$, where the spatial part $Q_s(x)$ is a boxcar function between $x = \pm 0.5$ and $Q_t(t)$ is such that $p_c$ matches the simplified pore pressure history (Figure \ref{fig:leak}a). Further discussion of parameters is given in Appendix A.
+
+We follow the setup and initial conditions as implemented by \citeA{Larochelle2021}. However, some critical differences in the model setup and characterization of fluid flow are worth mentioning.  \citeA{Larochelle2021} implemented 1D isotropic diffusion along the shear layer, corresponding to the pressure in the shear zone spatially constant in $y$; there is no fluid diffusion or coupling of the flow and deformation in the bulk. Here we assume that the pressure measured in the experiment \citeA{Guglielmi2015} reflects the shear zone center pressure $p_c$, whereas in \citeA{Larochelle2021} this would be a constant value along the $y$-dimension at $x = 0$. 
+
+We stress that we do not aim either to replicate the simulations and results of \citeA{Larochelle2021} or to model the experiments of \citeA{Guglielmi2015} explicitly. Our goal is to use these previous results to guide us in finding the relevant part of the parameter space consistent with experimental findings. Then we wish to vary other properties that are generally not tested in comparable studies - such as poroelastic properties of the bulk - to understand if they significantly affect the slip process and nucleation during fluid injection.
+
+We take the simulation shown in Figure \ref{fig:Appg0}a, with $\gamma = 0$, $\nu_u = 0.262$, and $c = 4\cdot$10$^{-8}$, as our reference simulation. This simulation has most similarity with previous work since the poroelastic response is reduced (with $\nu_u = 0.262$ and $\nu = 0.24$ being close in value), the diffusivity of the bulk is small, and no inelastic dilatancy occurs.
+
+\subsection{The importance of leak-off into bulk}
+
+Before investigating the details of the slip in each simulation, we first look at the fluid leakoff in response to pressurization.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale =  0.95]{Figures/pressureleakoff.pdf} % this command will be ignored
+\caption{Comparison of ({\bf a}) imposed pressurization at the fault center ({\bf a}) and ({\bf b,c,d})fluid leakoff per unit length in the invariant dimension into the bulk. The numbers in color indicate, at 2000 s, how much net fluid mass had moved into the bulk compared to the injected amount. Substantial lag is observed between fault pressurization and onset of significant leak off. We find that different bulk parameter combinations lead to very different amount of leakage. As dilatancy is introduced ({\bf c,d}), the net leakoff decreases due to the dilatancy causing flow back into the shear zone from the bulk. }
+\label{fig:leak}
+\end{figure}
+
+Without any dilatancy, the reference case (Figure \ref{fig:leak}b purple) has the least amount of leakoff into the bulk as expected since we consider this to be the most similar to elastic simulations with no bulk diffusion. Nevertheless about 23\% of the injected mass is lost. It is curious to compare the $\nu_u = 0.262$, $c = 4\cdot$10$^{-7}$ m$^2$/s and $\nu_u = 0.35$, $c = 4\cdot$10$^{-8}$ m$^2$/s  (Figure \ref{fig:leak}b yellow and orange respectively). One would expect that changing the bulk diffusivity by a factor of 10 would have much greater influence on leakage than changing the undrained Poisson's ratio, yet the leakage is similar. Changing $\nu_u$ from 0.262 to 0.35 increases $M$ by a factor of 2.75, thus, if $c$ is constant, then for consistency $\kappa = c/M$ is reduced by about 1/2.75. For reference, $\kappa = 3.1502 \cdot {10}^{-19}$ m$^2$/(Pa s) when  $\nu_u = 0.262$, $c = 4\cdot$10$^{-8}$ m$^2$/s and thus the bulk mobility $\kappa$ is about an order of  magnitude larger than the mobility $\kappa_{cy} =  8.7584 \cdot 10^{-20}$ m$^2$/(Pa s) across the shear layer. As mentioned previously, and apparent from inspecting the convolution kernels $K_1$ and $K_2$, the flow into the bulk has two timescales $t_b = 1/c k^2$ and  $t_{f} = ({\kappa^2 \epsilon^2})/({\kappa_c^2 c })$. We thus see that $t_f$ is reduced by about 0.13. These considerations explain the observed similar leakoff. Further, this highlights the importance of multiple time-scales in the simulated problem and in real faults where multiple diffusion times undoubtedly exist. 
+
+When simulations without and with dilatancy are compared (Figure \ref{fig:leak}b vs. Figure \ref{fig:leak}c,d), a consistent behavior is revealed but with the leakage universally  reduced as $\gamma$ is increased, although to a different degree for different simulations. The reduction in net leakage occurs because the dilatancy reduces pressure and causes flow back, or suction, from the bulk into the shear zone.
+
+The following two sections investigate slip behavior as the poroelastic and dilatancy parameters are varied, making some of the effects discussed here even more apparent.
+
+
+\subsection{Effects of poroelasticity and bulk diffusivity on slip evolution}
+
+First, we explore the simplest case, and the one most studied in the literature, where pore pressure change in the shear zone is introduced by injection and evolves through diffusion, but does not change due to dilatancy. In most cases, this would mean that the pore pressure change is one-way coupled. In other words, the pore pressure changes slip by affecting the frictional strength, but the slip does not change the pore pressure \cite<e.g.>{Bhattacharya2019,Cappa2019,Larochelle2021}. However, in the case of poroelastic bulk that we are investigating, there is potential for slip to affect the pore fluid pressure even in the absence of dilatancy effect, due to the poroelastic coupling. For example, slip induces changes in pore fluid pressure in the bulk, leading to variations in $p^+$ and $p^-$ on the boundary between the bulk and the shear layer, affecting both the average pressure in the layer and, eventually $p_c$ through diffusion.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.95]{Figures/gamma0_comparison.pdf} % this command will be ignored
+\caption{Simulations of fault fields with time and space for varied bulk diffusivity $c$ and undrained Poisson's ratio $\nu_u$ as listed above each panel (and no dilatancy, $\gamma = 0$). Each panel shows the average shear zone pressure $\langle p \rangle$ and log slip rate  $\log_{10}{V}$. $x$ indicates location along the length of the fault, but we note that the simulation domain is 5 times larger (400 m) than shown. The black dashed lines are the 0.5 MPa pressure contours, which we take as representative of the pressure front distance. The reference simulation with small difference in $\nu_u$ and $\nu$ and low $c$ shows highly unstable slip in panel {\bf a} (four seismic events). But we observe highly stabilized slip in panel {\bf d}, where the undrained Poisson's ratio and bulk diffusivity are larger.}
+\label{fig:Appg0}
+\end{figure}
+
+The simulations (Figure \ref{fig:Appg0}) demonstrate a wide spectrum of slip stability due to variations in two parameters that have not been explored much in the literature: bulk diffusivity and undrained Poisson's ratio. First, in the reference simulations, a smaller undrained Poisson's ratio $\nu_u$ and bulk diffusivity $c$ (panel a) results in highly unstable behavior with four seismic ruptures.  In contrast, with larger bulk diffusivity $c$ and undrained Poisson's ratio $\nu_u$ (panel {\bf d}) we observe very limited slip in response to the injection. Clearly, the fault is not slipping in a seismically unstable manner.  In the two intermediate cases, where one value is larger and the other smaller (panels {\bf b} and {\bf c}), we see somewhat stabilized behavior, with three ruptures instead of four and later onset of seismic slip. Clearly, neither parameter alone is controlling the stability characteristics of the fault. We discuss how the undrained parameters can play a significant role in the stability in section \ref{sec:undr}.
+
+Figure \ref{fig:Appg0} shows that although in all cases the average pore pressure in the shear zone is similar, lower average values correlate with increased stability. This is also directly reflected in the leakage reported in Figure \ref{fig:leak}b. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale =  0.85]{Figures/logV_and_pressure_atpoint.pdf} % this command will be ignored
+\caption{Variability of slip rate (blue, left axis) and pore pressure (other colors, right axis) at $x = 17$ m in the reference simulation ($\nu_u = 0.262$, $c = 1.7 \cdot 10^{-8}$ m$^2$/s, Figure \ref{fig:Appg0}a).  }
+\label{fig:Vandpatpoint}
+\end{figure}
+
+While Figure \ref{fig:Appg0} offers a good view of the total fault dynamics, it is hard to see the seismic slip rates since dynamic events are short-lived, and the components of the average pressure $\langle p \rangle$ are hidden. Figure \ref{fig:Vandpatpoint} shows the slip rate and various pressures at $x = 17$ m in the reference simulation (Figure \ref{fig:Appg0}a), where the first seismic rupture approximately arrests. The simulated slip rates vary by orders of magnitude, from the near-zero initial values corresponding to a locked fault, to significant slow slip with sustained slip rates of $10^(-7)$ to $10^(-5)$ m/s, to dynamic slip rates of the order of 0.1 m/s. Note that the first seismic event is arresting at this fault location, with the peak slip rate of $10^(-4)$ m/s. We observe a striking dependence of $p^\pm$ on the slip, with the jumps in pressure indicating the poroelastic response associated with rapidly spreading rupture. Further, even in the absence of any active rupturing, seen as spikes in slip rate, there is nevertheless substantial differences in the values of $p^+$, $p^-$, and  $p_c$. The shear zone half-width is $\epsilon =  1$ mm (Appendix A), and thus the simulation indicates pressure differences around 1 MPa across this thin shear zone. Figure \ref{fig:Vandpatpoint} shows that our choice of using $\langle p \rangle$ as the relevant pressure when computing the effective normal stress is quite conservative as it averages out significant part of the poroelastically induced pressure change, especially during episodes of rapid slip. 
+
+\subsection{Combined effects of poroelasticity and dilatancy}
+
+Here we explore the same parameter combinations, initial conditions, imposed injection, and overall setup as in the previous section. However, we now include dilatancy with $\gamma = 1.7 \cdot 10^{-5}$ first (Figure \ref{fig:Appgs}) and then $\gamma = 1.7 \cdot 10^{-4}$. The latter value was derived by \citeA{Segall1995} from the experiments of \citeA{Marone1990}. $\gamma = 1.7 \cdot 10^{-4}$ is typically used in the literature. We explore a smaller value as well, since it reveals an intermediate regime and there is no general reason to believe that the dilatancy coefficient could not vary significantly.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale =  0.95]{Figures/gammasmall_comparison.pdf} % this command will be ignored
+\caption{
+Simulations of fault fields with time and space for varied bulk diffusivity $c$ and undrained Poisson's ratio $\nu_u$ as listed above each panel, with dilatancy $\gamma = 1.7 \cdot 10^{-5}$. The panels and simulation setup are the same as in Figure \ref{fig:Appg0} but with dilatancy. We observe highly stabilized slip in panel d, where the undrained Poisson's ratio and the bulk diffusivity are larger. Overall, the results are largely consistent with those of Figure \ref{fig:Appg0}, where panel {\bf d} shows the most stable behavior, panel {\bf a} is the least stable, and parameter combinations in panels {\bf b} and {\bf c} show intermediate stability. However, here all simulations show gradual migration of a slow slip front and no seismic event. Thus all simulations are substantially stabilized, as expected from introducing dilatancy. We note negative pore pressure change at the slip-front in panel {\bf a} (blue colors), and strong overall deviation from the square-root characteristic growth of the pore pressure front. }
+\label{fig:Appgs}
+\end{figure}
+
+Notable in Figure \ref{fig:Appgs} are similar effects of slip stabilization due to increasing $c$ and $\nu_u$, as in Figure \ref{fig:Appg0}. However, with even relatively mild dilatancy, the style of slip is very different. We observe no seismic events but slow slip migration, with significant stabilization of slip by dilatancy as expected from prior studies \cite<e.g.,>{Segall1995,Segall2010b,Zilio2020}. In all cases, except panel d, the slow slip eventually outpaces the pore pressure front as indicated by the dashed 0.5 MPa contour. However, the slip closely tracks the contour, which suggests that a different definition of the pore pressure front - i.e., with a lower threshold than 0.5 MPa - may actually lead to slip and pore pressure front being nearly coincident. 
+
+Strikingly, the slip in the presence of dilatancy is drastically altering the pore pressure front. The influence of dilatancy on the fault pore pressure is most prominent in panel a, where the average pressure at the rupture tip is decreased compared to a background value, i.e. negative pore pressure change. Furthermore, the pore pressure front does not follow the classic square-root-of-time diffusion profile seen in Figure \ref{fig:Appg0} and Figure \ref{fig:Appgs}d. Rather, the profile is square-root characteristic initially, but once the slip rate is significant, the dilatancy decreases the pore pressure and effectively creates suction at the tip, leading to the perturbed pore pressure front. The resulting shape of the fault pore pressure contour resembles the outline of a squid's head. As seen in Figure \ref{fig:leak}, inclusion of a non-zero $\gamma$ reduces the net leak-off into the bulk. Figure \ref{fig:Appgs} demonstrates why, with the dilatancy-induced pore pressure change causing mass transfer into the fault from the bulk. Our simulations thus show agreement with the theorized flow into the rupture tip from the bulk \cite{Brantut2021}. Lateral flow from the adjacent shear zone is likely also occurring \cite{Ciardo2019}, but it cannot be the only transfer since that would not affect the net leakoff into the bulk. The case of Figure \ref{fig:Appgs}d is already very stabilized by the choices of $\nu_u$ and $c$ and thus dilatancy does not play a significant stabilizing role. This explains why the blue leakage curve in Figure \ref{fig:leak} is not much influenced by the dilatancy.  
+
+Finally, we show simulations using the value of the dilatancy coefficient $\gamma = 1.7 \cdot 10^{-4}$ as inferred by \citeA{Segall1995}.  
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale =  0.95]{Figures/gammanorm_comparison.pdf} % this command will be ignored
+\caption{Simulations of fault fields with time and dilatancy $\gamma = 1.7 \cdot 10^{-4}$. Otherwise the figures and simulation setup is the same as in Figure \ref{fig:Appg0}. We observe highly stabilized slip in all cases. Unlike the previous two cases the rupture only grows in a region of significantly elevated pore pressure. }
+\label{fig:Appgn}
+\end{figure}
+
+For $\gamma = 1.7 \cdot 10^{-4}$, the slip is further stabilized (Figure \ref{fig:Appgn}). There is no seismic rupture and the slow slip front is well within the region of the pore pressure increase, except in the case of panel a where the slow slip catches up with the pore pressure front towards the end of the simulation. In other words, the rupture is driven by high pore pressure and thus grows quasi-statically within the pressure front. Compared to Figure \ref{fig:Appgs}, we observe significant additional dilatancy-induced changes in pore pressure, with the extent and values of pore pressure in the pressurized zone significantly modified and generally reduced. Yet the non-monotonic pore-pressure front features are less prominent in Figure \ref{fig:Appgn}, with the exception of case (a) where they are similar.  This may be somewhat counter-intuitive given that the dilatancy coefficient is an order of magnitude larger in Figure \ref{fig:Appgn}. However, the effect of dilatancy also depends on the slip rates that are able to develop. The case of Figure \ref{fig:Appgn}a is still the most unstable due to the choices of $\nu_u$ and $c$, and hence the dilatancy has a more pronounced effect on the shape of the rupture front. Since the dilatancy coefficient is smaller in Figure \ref{fig:Appgs}, a larger slip patch can develop before the stabilization becomes significant. This slip patch is less stiff or alternatively one might state that it produces a higher energy release rate. Thus it is able to drive rupture propagation at a higher slip rate, which ultimately results in increased pore pressure response at the front than when the dilatancy coefficient is larger and suppresses instability development at an earlier time. 
+
+We emphasize that selecting $\gamma = 1.7 \cdot 10^{-4}$ does not generally mean unconditionally stable ruptures. One could achieve seismic rupture by choosing a more rate-weakening (and hence instability-promoting) friction properties or by altering the injection strategy; for example, injecting at a higher rate may lead to a seismic event \cite{Gori2021}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale =  0.95]{Figures/gammasmall_comparison_variation.pdf} % this command will be ignored
+\caption{Changes in the coefficient of friction and inelastic dilatancy for $\nu_u = 0.262$ and $c = 4\cdot$10$^{-8}$ m$^2$/s as $\gamma$ is varied. Panel {\bf a} represents the reference simulation without any dilatancy. We see that the largest change in porosity from inelastic dilatancy is about 0.004, which is substantially less than the reference value of 0.068.}
+\label{fig:fandphi}
+\end{figure}
+
+%Figures \ref{fig:Appgs}a-c and \ref{fig:Appgn}a indicate that pressure drop coincides with the propagation of the rupture tip. One could thus expect that this is where inelastic dilatancy is acting and increasing effective normal stress and thus the frictional strength. We first investigate the reference simulation (Figure \ref{fig:fandphi}a where $\nu_u = 0.262$ and $c = 4\cdot$10$^{-8}$ m$^2$/s ), which is also the set of poroelastic parameters that leads to the most unstable behavior. We observe complex evolution of the friction coefficient in space and time as repeated spontaneous re-ruptures of the fault occur.
+
+%Much of the current analytical work on injection induced ruptures \cite<e.g.,>{Garagash2012,Ciardo2019,Brantut2021,Saez2022,Ciardo2022} is based on linear slip weakening friction. Such a friction law cannot, in a straightforward manner, explain or quantify repeated ruptures that grow in magnitude with time since healing plays a critical role. This highlights the importance of such simulation as we have presented to understand if analytical analysis is not capturing critical characteristics of injection induced ruptures.
+
+For further insight, we explore how the friction coefficient and change in inelastic dilatancy evolve in space and time for the reference case of poroelastic properties (Figure \ref{fig:fandphi}). For cases with inelastic dilatancy, we observe that change in inelastic dilatancy is occurring nearly uniformly within the ruptured part of the fault (Figure \ref{fig:fandphi}bc), in particular in the time span of 1000s to 1500s before the pressure is lowered again. Contrasting Figure \ref{fig:fandphi}b and \ref{fig:Appgs}a shows clearly that the average pore pressure is not uniform and primarily dropping at the rupture tip. Mote that the $p_c$ value is prescribed between $x = \pm 0.5$ as described in Figure \ref{fig:leak}a, but this does not mean that $\langle p \rangle$ (which is plotted) is constant, due to bulk leakoff affecting $p^\pm$. We can deduce that the inflow back from the bulk and through injection maintains pressure within the ruptured region except at the propagating tip. This suggests that the propagation of the rupture tip may depend on how fast fluids can diffuse into the tip region \cite{Ciardo2019,Brantut2021}. We suggest that further simulations and analysis that incorporates rate-and-state effects are needed to fully understand this phenomenon. The work by \cite{Garagash2020} may offer a useful starting point for such analysis, however, our results indicate that the addition of dilatancy and bulk diffusion significantly affect the phenomenon. Moreover, such analysis would have to grapple with healing and other effects of rate-and-state friction that make the evolution of the friction coefficient qualitatively different from linear slip weakening.  For example, consider how the friction coefficient varies with slip at the center point for one simulation with several seismic events (Figure \ref{fig:friccomb}). The initial rupture shows friction behavior analogous to linear slip-weakening friction, but subsequent ruptures show behavior that cannot be modeled with the same linear slip-weakening friction since the peak frictional strength is clearly strongly history-dependent. In this particular case, we observe non-monotonic peak strength as slip accumulates. This reflects in part differences in time-dependent healing, with the first event occurring on a well-healed fault, and then the time between the third and second rupture being larger than between the second and first ones (Figure \ref{fig:friccomb}b inset).  It also depends on how abrupt the increase of slip rate is at the rupture front, with sharper increases (as in the third event vs. the second event) corresponding to a larger direct effect.  
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale =  0.90]{Figures/friction_comparison.pdf} % this command will be ignored
+\caption{Changes in ({\bf a}) friction coefficient and ({\bf b}) slip rate as a function of slip at the mid-point of the fault ($x = 0$) with $\nu_u = 0.262$, $c = 1.7 \cdot 10^{-7}$ m$^2$/s, $\gamma = 0$ (also shown in Figure \ref{fig:Appg0}c). Insets show the corresponding space-time evaluations, with the blue line marking the location of the center point, inset scales are the same as in Figures \ref{fig:Appg0} and \ref{fig:fandphi}. The observed evolution of the friction coefficient suggests significant differences from a simpler linear slip-weakening model, with a clear history dependence of the peak frictional strength.}
+\label{fig:friccomb}
+\end{figure}
+
+\section{Discussion} \label{sec:disc}
+
+\subsection{Result summary and interpretation} \label{sec:undr}
+
+The application of our method has had two main themes. First, how altering the bulk diffusivity and undrained Poisson's ratio influences the fault slip response from fluid injection. Second, how dilatancy affects the fault response due to injection.  Dilatancy is already understood to be a stabilizing mechanism \cite{Rudnicki1988,Segall1995,Segall2010b}, although only a limited study of coupled injection and dilatancy has been carried out \cite<except>{Ciardo2019,Yang2021}. Thus our general finding, that fault slip is stabilized and aseismic slip is promoted when dilatancy is included is not surprising. We have thus chosen to contrast this well-known stabilizing mechanism with less explored parameters that we are uniquely positioned to investigate with the method described in this paper. Namely we vary parameters $c$ and $\nu_u$. Indeed the latter has meaning only for a poroelastic solid. A purely elastic solid, as considered in most studies \cite<with some exceptions, e.g.>{Jha2014,Torberntsson2018,Heimisson2019} has only a single Poisson's ratio.
+
+Our selection of three different $\gamma$ values that parameterize dilatancy reveals different modes of rupture. First, highly unstable response with repeated seismic ruptures of the same part of the fault. Second, slow, quasi-static slip migration that propagates at the boundaries and perhaps beyond the pressurized region, depending on its definition. Finally, quasi-statically growing slip only in regions of high pressure. This can be observed in Figures \ref{fig:Appg0}, \ref{fig:Appgs}, and \ref{fig:Appgn}, respectively. The \citeA{Guglielmi2015} experiment reported primarily aseismic slip and significant dilatant behavior. Some micro-earthquakes were reported, but they seemed to occur off the main fault and represent only a small fraction of the moment released. Thus our findings show, given the experimental constraints and information from a previous modeling study \cite{Larochelle2021}, that inclusion of dilatancy results in behavior qualitatively similar to what was reported by \citeA{Guglielmi2015}. However, further study is needed for quantitative matching. We highlight that the method presented predicts fault opening from dilatancy or pressurization and thus may provide additional constraints in data application when that is directly measured \cite{Cappa2019}.
+
+Our reported influence of bulk diffusivity and undrained Poisson's ratio is more novel. We observe that increasing the bulk diffusivity by an order of magnitude significantly stabilizes the fault in the simulations, even in the absence of dilatancy. It is important to emphasize that this result is also contingent on the shear zone mobility, which we have not varied. This is due to the time scales of fluid diffusion in the bulk and shear zone not being independent as discussed by \citeA{Heimisson2021}. The bulk diffusivity has an important control on the stability of the fault as it controls how rapidly fluids can escape the shear zone. It thus controls the average pressure of the shear zone even though we maintain a fixed injection pressure. Our parameter choices (Appendix A) are such that we consider a fault initially far from steady-state or, in other words, not critically stressed. Although the changes in average pressure in Figures  \ref{fig:Appg0}, \ref{fig:Appgs}, and \ref{fig:Appgn} are subtle, they are sufficient to cause significant stabilization in fault behavior. This can be observed by comparing panels {\bf b} and {\bf d}, or {\bf a} and {\bf c} in Figures \ref{fig:Appg0}, \ref{fig:Appgs}, and \ref{fig:Appgn}. 
+
+Bulk diffusivity is often considered to be the same as that of the shear zone or the bulk is simply taken to be impermeable. In this study, we have taken what we consider to be small values of $c \sim 10^{-8} - 10^{-7}$ m$^2$/s, yet we observe a very significant effect with significant stabilisation at higher diffusivity. Granites are more likely to fall into the $c \sim 10^{-5} - 10^{-6}$ m$^2$/s and many rocks types are even more diffusive except shales that can have $c \sim  10^{-7}$ m$^2$/s \cite{Cheng2016}. Further, as seen in equation (\ref{eq:pc}), the flux into the bulk scales with $\kappa_{cy}/\epsilon^2$. Since we expect $\epsilon$, the shear zone half-thickness, to be small, we can expect that flux into the bulk occurs rapidly. Indeed, in this study, we set the $\kappa_{cx}$, along shear zone mobility, to be a factor $10^9$ larger than $\kappa_{cy}$ such that the fluid migration along the shear zone is significant compared to the flux into the bulk. This highlights that how rapidly the bulk can transport fluids is critical for the fault dynamics. As discussed in \citeA{Heimisson2021}, and can be seen in the SBI solutions in this paper, the characteristic time of bulk diffusion is $\sim 1/(c k^2)$. Thus the bulk fluid transport is highly dependent on the length scale, and idealizations of an impermeable bulk may only be valid at a certain length scale.
+
+The dependence on the undrained Poisson's ratio may be surprising, and it may not be clear why having a pronounced undrained poroelastic response would result in a greater stabilization. As we discussed in relation to Figure \ref{fig:leak}, changing $\nu_u$ but keeping $c$ fixed requires that $\kappa$ is reduced. Thus the $t_f$ (equation \ref{eq:tf}), the timescale that fluids can move or flow through the shear zone, is changed but not $t_b$ (equation \ref{eq:tb}), the time scale of fluid migration in the bulk. Thus by changing $\nu_u$ we increase the speed of fluid flow in the shear zone, which could lead to more rapid leakoff into the bulk and lower shear zone pressure. 
+
+But is this the only influence of changing $\nu_u$? The analysis of \citeA{Heimisson2021} provides some insight. The undrained critical wavenumber is 
+
+\begin{equation}
+|k_{cr}^{un}| \simeq \frac{2 \sigma_0(b-a)(1-\nu_u)}{GD_{RS}} \left(1 - \frac{f_0 \gamma}{ \beta \sigma_0 (b-a) } + \mathcal{O}(\epsilon) \right) ,
+\label{eq:kappa0un} 
+\end{equation}
+and the corresponding drained wavenumber is 
+
+\begin{equation}
+|k_{cr}^d| \simeq \frac{2 \sigma_0(b-a)(1-\nu)}{GD_{RS}} \left(1 - \frac{f_0 \gamma}{ \beta \sigma_0 (b-a) } + \mathcal{O}(\epsilon) \right) ,
+\label{eq:kappa0d} 
+\end{equation}
+assuming the shear zone mobility tends to zero. Thus, the ratio of the minimum unstable wavelengths in the drained and undrained limits is
+
+\begin{equation}
+\frac{\lambda_d}{\lambda_{un}} = \frac{1 - \nu}{1 - \nu_u},
+\end{equation}
+Thus, at most, this ratio can be 2, but more commonly around 1 -- 1.5. In simple terms, it means that a perturbation or a slip patch on the fault of length $\Delta L$ may be unstable if the bulk responds in a drained manner. However, the patch or perturbation may need to be up to $2 \Delta L$ to be unstable if the bulk responds in an undrained manner. There are a few things to note about this stabilization. First, the transition from a drained to undrained response depends on the characteristic bulk and shear zone diffusion times $t_b$ and $t_f$ relative to how fast the fault is slipping and the slip patch length scale (due to the $k^2$ dependence of $t_b$). Thus the timing of stabilization by a transition from drained to undrained response is nontrivial. Second, the drained and undrained limits are inadequate to characterize the stabilization fully. \citeA{Heimisson2021} showed that, in an intermediate (neither drained nor undrained) regime, the fault could be more stable than in the undrained regime. Finally, since anti-plane sliding does not depend on Poisson's ratio, the same kind of stabilization would not occur in Mode III. This may lead to interesting directional effects in 3D simulations. 
+
+In summary, changing an undrained poroelastic parameter not only influences the fluid flow and the undrained elastic response but also the timing when the fault slip can be considered undrained. We suspect that this feedback may sometimes lead to surprising and even counter-intuitive stability characteristics and needs careful consideration in future work.
+
+Panels {\bf b} and {\bf c} in Figures  \ref{fig:Appg0}, \ref{fig:Appgs}, and \ref{fig:Appgn} consistently show similar rupture propagation and stabilization. This suggests that, in a certain sense, that setting $\nu_u = 0.35$ is approximately equally stabilizing as setting $c = 4 \cdot 10^{-7}$ m$^2$/s relative to the respective lower values in the simulation setup. Due to the many complexities mentioned in the previous paragraph, we do not expect this to hold generally. However, simulations with combined $\nu_u = 0.35$ and $c = 4 \cdot 10^{-7}$ m$^2$/s are nearly identical regardless of the $\gamma$ value (panels {\bf d} in Figures  \ref{fig:Appg0}, \ref{fig:Appgs}, and \ref{fig:Appgn} ). This observation highlights that the bulk effects, through combined diffusion and poroelasticity, can be so stabilizing that dilatancy cannot become significant enough to affect the rupture propagation and nucleation.
+
+While we do not aim to precisely match the fault slip observed in the field experiment of \cite{Guglielmi2015}, it is clear that multiple models would be able to reproduce the stable slip measured in the injection site during the experiment.  The study of \citeA{Larochelle2021}) already found multiple potential parameter sets that match the observed slip behavior nearly identically, by varying the friction properties and along-fault diffusivity. Given the significant stabilizing effects of bulk diffusivity, undrained Poisson's ratio, and dilatancy - none of which were included in \citeA{Larochelle2021}) - it is clear that many additional models can be created, for example, by choosing more unstable fault friction properties and adding one or more of the stabilizing mechanisms discussed in this study. To distinguish between different possible models, we need field experiments with multiple measurement locations of pore fluid pressure and slip/deformation.
+
+For example, one distinguishing characteristic that highlights the interaction of poroelastic effects with dilatancy is the non-standard, non-monotonic evolution of the pore-pressure front that we observe, as in Figures \ref{fig:Appgs}-\ref{fig:Appgn}.  Dilatancy - and the associated reduction in pore fluid pressure - is not uniform along the slipping fault but rather is strongly affected by the slip-rate spatio-temporal distribution.  Hence it can create local suction that induces pore fluid flow reversals, which in turn would depend on the transport and poroelastic properties. Additional measurements away from the injection location would thus help constrain the range of applicable models.
+
+One important observation from our simulations is how a single injection can cause multiple seismic re-ruptures of the same part of the fault (Figure \ref{fig:Appg0}). With each re-rupture, the lateral extent of the rupture increases and the probability of a runaway rupture, which is not confined to the high pore pressure region, increases as well. If observed in injection experiment, such re-rupturing pattern may be a precursor for a runaway rupture and thus may be important to analyze further. We see that during such repeated rupturing the frictional strength is not well explained by the simpler linear slip-weakening friction law (Figure \ref{fig:friccomb}) or other friction laws where healing is not accounted for. This fact negates most common analysis strategies applied to injection induced frictional slip used today \cite<e.g.,>{Garagash2012,Ciardo2019,Garagash2020,Brantut2021,Viesca2021,Saez2022,Ciardo2022}, if such a phenomenon were to be studied.
+
+
+\section{Conclusions}
+
+We have presented novel spectral boundary-integral (SBI) solutions applicable to frictional and fracture mechanics problems in a plane-strain linear poroelastic solid. The solutions consider that the interface of two poroelastic half-spaces may undergo mode I and II displacement discontinuity as well as pressurization. We have applied the solutions to develop a method and code implementation of a rate-and-state fault that has simultaneous poroelastic bulk repsonse, inelastic dilatancy, and injection. We apply this code to data from a field experiment, which has been previously analyzed by modeling. We explore the role of bulk diffusion and poroelastic properties of the bulk with and without inelastic dilatancy of the gouge. We find, surprisingly, that bulk diffusion and poroelastic properties of the bulk, which are parameters that are rarely explored, can qualitatively affect rupture stability and propagation. Further, we find the stabilization by bulk diffusion and poroelastic properties can be comparable to the well-known stabilizing dilatancy mechanism. We find that dilatancy can strongly alter the pore presssure distribution on the fault as slip evolves which, if measured, would help constrain hydrological and mechanical properties of the fault and bulk.  A further numerical and analytical study is needed to fully characterize the different stability regimes that we have observed. However, our results show that a rich spectrum of slip behavior can be obtained during injection into a fault depending on bulk properties that are frequently left out in previous studies.
+
+
+\section*{Data Availability Statement}
+\noindent
+ No original data is presented in this study. The data used in regard to application to the \cite{Guglielmi2015} field experiment was archived by \citeA{StacyData}: CaltechDATA repository (\url{https://data.caltech.edu/records/1891}). The software implementation of the method described in this paper is available here  \\ \noindent \url{https://doi.org/10.5281/zenodo.6010353} 
+ \cite<see>{elias_rafn_heimisson_Poro_SBIM}.
+
+\acknowledgments
+This study was supported by the Geophysics Option Postdoctoral Fellowship from the Division of Geological and Planetary Sciences at Caltech and ETH Postdoctoral fellowship (Project No. FEL-19 20-2) to E.R.H. The work was further supported by the NSF-IUCRC Center for Geomechanics and Mitigation of Geohazards (projects GMG-4.1, GMG-4.2) to N.L. We thank Yongjia Song for providing code used in making Figure \ref{fig:Song}. We thank reviewers and editors for helpful comments.
+
+\appendix
+\section{Parameter values}
+Here we briefly explain how the parameter values, listed in the table below, are set.
+
+Parameters $G$, $\nu$, and all friction and loading parameters in Table \ref{symbolstable} are from \citeA{Larochelle2021}.
+Compressibilities $\beta_f^p,\beta_f^\sigma,\beta_n^p,\beta_n^\sigma,\beta_g^p,\beta_g^\sigma$ in addition to $\phi_0$ and $\epsilon$ are selected as in \citeA{Heimisson2021}.
+
+Skempton's coefficient $B$ is fixed and set to $0.85$. This value is representative of Westerly granite as well as certain types of sandstone and other rocks. The undrained Poisson's ratio is, on one hand, set to $0.35$ to reflect the approximate value of Westerly granite and on the other hand to 0.262 to represent the undrained value of Charcoal granite. We note that Charcoal granite has $\nu = 0.270$ and $\nu_u = 0.292$ \cite{Cheng2016}. However, we wish to fix $\nu$ such that we do not have multiple parameters varying each simulation. Thus only the range $\nu_u - \nu$ is the same as for Charcoal granite albeit the Poisson's ratios are similar in absolute terms. Further, Charcoal granite has a substantially lower Skempton's coefficient $B = 0.454$, but we still use $B = 0.85$ again to limit the number of varying parameters. We, therefore, do not recommend using this paper as a reference for poroelastic parameters, but rather look at the overview of \citeA{Detournay1993,Cheng2016}, which we used, and references therein for more information on error and methods for measuring. Here we simply want to explore two cases where $\nu_u - \nu$ are small and large, but at the same time make sure that the ranges reflect real values measured in rocks.
+
+As explained in the main text, the range of the dilatancy coefficient is selected to reflect three different styles of ruptures. First we set $\gamma = 0$ and $\gamma = 1.7 \cdot 10^{-4}$ as trial values where the latter is the standard value used and was identified by \citeA{Segall1995}. We observe that the two values would typically render either highly unstable or very stable slip. Thus the value of $\gamma = 1.7 \cdot 10^{-5}$ is used to consider an intermediate regime, and shown to produce sustained slow slip migration.
+
+The two mobilities $\kappa_{cx}, \kappa_{cy}$ and the bulk hydraulic diffusivity $c$ are determined by trial and error to approximately match the pore pressure evolution in \citeA{Larochelle2021}. We highlight that due to the heterogeneous permeability structure, the fact that we treat the pore pressure as non-constant in the shear zone, and other coupling mechanisms that alter the pore pressure, we cannot simply select parameters that give exactly the same pore pressure evolution as in \citeA{Larochelle2021}.
+
+
+\begin{table}
+\caption{Parameter values in the study}
+\centering
+%\resizebox{\textwidth}{!}{
+\begin{tabular}{l l l}
+\hline
+Symbol & Description & Value\\
+\hline
+\multicolumn{3}{l}{\textit{Bulk and gouge material properties}}\\
+$G$ & Shear modulus & 10 GPa\\
+$B$ & Skempton's coefficient & 0.85\\
+$\nu$ & Drained Poisson's ratio & 0.24\\
+$\nu_u$ & Undrained Poisson's ratio & 0.35, 0.262\\
+$\beta_f^p$,$\beta_f^\sigma$ & Isotropic and uniaxial fluid compressibility & $0.44 \cdot 10^{-9}$ Pa$^{-1}$, $0.24 \cdot 10^{-9}$ Pa$^{-1}$, \\
+$\beta_n^p$,$\beta_n^\sigma$ & Isotropic and uniaxial pore volume compressibility & $6.0 \cdot 10^{-9}$ Pa$^{-1}$, $3.3 \cdot 10^{-9}$ Pa$^{-1}$, \\
+$\beta_g^p$,$\beta_g^\sigma$ & Isotropic and uniaxial solid gouge compressibility & $0.020 \cdot 10^{-9}$ Pa$^{-1}$, $0.011 \cdot 10^{-9}$ Pa$^{-1}$, \\
+$\phi_0$ & Reference porosity & 0.068 \\
+$\gamma$ & Diltancy coefficient \cite{Segall1995} & 0, 1.7$\cdot$10$^{-5}$, 1.7$\cdot$10$^{-4}$ \\
+$\epsilon$ & Shear-zone half thickness & 1.0 mm\\
+$c$ & Bulk hydraulic diffusivity & 4$\cdot$10$^{-8}$, 4$\cdot$10$^{-7}$ m$^2$/s\\
+$\kappa_{cx}$ & Along shear-zone mobility & 8.7584$\cdot$10$^{-11}$ m$^2$/(Pa s)\\
+$\kappa_{cy}$ & Across shear-zone mobility & 8.7584$\cdot$10$^{-20}$ m$^2$/(Pa s)\\
+\multicolumn{3}{l}{\textit{Friction and loading parameters}}\\
+$D_{RS}$ & Characteristic state evolution distance & 16.75 $\mu$m \\
+$a$ & Direct rate dependence of friction & 0.01125\\
+$b$ & State dependence of friction &  0.016 \\
+$\alpha_{LD}$ & \citeA{Linker1992} constant &  0.0 \\
+$V_0$ & reference slip rate & $10^{-6}$~m/s \\
+$f_0$ & reference friction & 0.55 \\
+$\tau_0$ & Initial shear stress & 2.15 MPa \\
+$\sigma_0$ & Initial effective normal stress & 4 MPa \\
+\hline
+\end{tabular}
+\label{symbolstable}
+\end{table}
+
+\section{Time-stepping} \label{sec:time}
+Here we describe the time-stepping scheme to simulate slow and fast slip with dilatancy and fluid injection into the faults. The scheme builds on the predictor-corrector schemes of \citeA{Lapusta2000} and \citeA{Heimisson2020}.  However, several significant modifications have been introduced to resolve fluid diffusion. Below we shall describe the stages of a single time-step by the algorithm. We also refer the reader to the source code \cite{elias_rafn_heimisson_Poro_SBIM} for a more explicit implementation of the time-stepping scheme. 
+\begin{enumerate}
+
+\item Initial explicit Euler prediction is made for time $t^{n+1} = t^n + \Delta t$ for $\delta_x^*$, $\delta_y^*$, $p_c^*$, $V^*$, where the asterisk represents the prediction of the next time-step.
+
+\item Fourier coefficients are computed corresponding to the prediction values $\delta_x^*$, $\delta_y^*$, $p_c^*$, that is $D_{x,n}^*$, $D_{y,n}^*$, $P_{n}^*$ using a Fast-Fourier Transform (FFT).
+
+\item Using equations (\ref{eq:tauS}), (\ref{eq:sigyyS}), and (\ref{eq:pSLanc}) the Fourier coefficients for changes in shear stress, normal stress and boundary pore pressure are computed and an inverse FFT is used to sum all Fourier modes.
+
+\item Prediction for shear stress $\tau^*$ and effective normal stress $(\sigma - p)^*$ is computed. In the results, we use the average pore pressure $\langle p \rangle$; however, we note that $p$ could here represent any number of pore pressure values, e.g. $p^\pm$ or $p_c$, depending on what assumptions are made about the relevant pore pressure in the shear localization region. In our numerical implementation \cite{elias_rafn_heimisson_Poro_SBIM}, the user sets which pore pressure to use.
+
+\item Prediction of the updated state-variable is computed using the analytical integration of the aging law by \citeA{Kaneko2011} which is assumes constant slip speed from $t$ to $t + \Delta t$ 
+
+\begin{equation}
+    \theta^* = \theta^p \exp \left( - \frac{\Delta t}{2 D_{RS}} (V^n + V^*)  \right) + \frac{2 D_{RS}}{(V^n + V^*)} \left( 1 - \exp \left( - \frac{\Delta t}{2 D_{RS}} (V^n + V^*)  \right)  \right),
+\end{equation}
+where we have taken taken the slip speed as the average $(V^p + V^*)/2$ between the slip speed at time $t^n$ and $t^{n+1} = t^n + \Delta t$. Here we use the superscript $^n$ to represent the fields at the previous time step, that is at time $t^n$.
+
+\item Via an algebraic manipulation of the rate-and-state friction law (\ref{eq:RSFL}) and (\ref{eq:avef}) a correction for the slip speed is computed
+\begin{equation}
+    {V}^{**} = 2 V_0 \sinh \left( \frac{{\tau}^* - \eta V^*}{a (\sigma - p)^*} \exp \left( - f_0/a - \frac{b}{a}\log(V_0 {\theta}^*/D_{RS}) \right) \right).
+    \label{eq:FLn}
+\end{equation}
+
+However, for locations along the fault where the slip speed exceeds a threshold value (here set to 1 cm/s) the previous expression is found to lead to numerical dispersion and the slip speed is obtained by solving the following non-linear equation as done by \citeA{Heimisson2020}:
+ 
+ \begin{equation}
+    \left|     {V}^{**} - 2 V_0 \sinh \left( \frac{{\tau}^* - \eta V^*}{a (\sigma - p)^*} \exp \left( - f_0/a - \frac{b}{a}\log(V_0 {\theta}^*/D_{RS}) \right) \right) \right| = 0 .
+    \label{eq:FLnim}
+\end{equation}
+
+
+\item Using the new slip speed correction $V^{**}$ the state variable is also updated
+
+\begin{equation}
+    \theta^{**} = \theta^p \exp \left( - \frac{\Delta t}{2 D_{RS}} (V^n + V^{**})  \right) + \frac{2 D_{RS}}{(V^n + V^{**})} \left( 1 - \exp \left( - \frac{\Delta t}{2 D_{RS}} (V^n + V^{**})  \right)  \right),
+\end{equation}
+and from equation (\ref{eq:phidil}) $\langle \phi \rangle_{pl}^{**}$ is computed using $\theta^{**}$.
+
+\item Updating $p_c$: for the sake of brevity, we will only refer to the code \cite{elias_rafn_heimisson_Poro_SBIM}, see also data availability statement, for a detailed implementation of this time-step, but a summary follows. In equation (\ref{eq:pcI}) (after substituting with equation (\ref{eq:avep}) for $\langle p \rangle$) we approximate the $\partial^2/\partial x^2$ derivative with second-order finite difference approximation. The time-integral is discretized using a trapezoidal rule. Predictions from step 1 and 3 are used to compute the various fields at time $t^{n+1}$ except we solve for $p_c^{**}$ (the prediction of $p_c$ for time $t^{n+1}$) implicitly by solving a system of linear equations. 
+
+\item Finally $p_c^{**}$ is used to update $\delta_{y}^{**}$, $\langle p \rangle ^{**}$, and $\delta_x^{**} = \delta_x^{n} + \Delta t (V^n + V^{**})/2$.
+
+\end{enumerate}
+
+After the steps above, the algorithm determines if it will proceed to the next time-step or reiterate following these rules.
+
+\begin{itemize}
+
+    \item A minimum of one iteration is used. If the algorithm finishes the aforementioned steps for the first time at the current time then it must iterate again. The algorithm moves back to step 1, but instead of explicit guesses for the new time step it uses previous updates. That is $\delta_x^{**} \rightarrow \delta_x^{*}$, $\delta_y^{**} \rightarrow \delta_y^{*}$, and $p_c^{**} \rightarrow p_c^{*}$.
+    \item If a minimum one iteration has been done, the algorithm checks for absolute and relative error in the estimate of $p_c$. That is if $\text{max} (|p_c^{**} - p_c^*|)/(a \sigma_0) > \xi/10$ (where $a$ is the direct effect parameter)  or $||p_c^{**} - p_c^*||_1/||p_c||_1 > \xi/10$ is violated then a new time-step is selected $\Delta t \rightarrow \Delta t /2$ and the algorithm proceeds to step 1 using the following initial predictions $(\delta_x^{**} + \delta_x^{n})/2 \rightarrow \delta_x^{*}$, $(\delta_y^{**} + \delta_y^{n})/2 \rightarrow \delta_y^{*}$, and $(p_c^{**} + p_c^n)/2 \rightarrow p_c^{*}$. Here $\xi$ is a factor that controls the accuracy of the solution, in simulations shown later this is set to $\xi = 1/32$, see Appendix C for more discussion of $\xi$.
+    \item If both a minimum of one iteration has been carried out and the error tolerances are satisfied, the algorithm proceeds to a new time step and $^{**}$ predictions are assigned as field values are time $t^{n+1}$. Finally, the new initial time-step is selected $\Delta t \rightarrow \text{min} (\xi V^{n+1}/D_{RS} , 1.1 \cdot \Delta t )$ where first we make sure that the state evolution is well resolved, by picking $\xi$ sufficiently small. Second, we make sure not to grow the time-step too much if the pore pressure evolution requires a smaller time-step than indicated by $\xi V^{n+1}/D_{RS}$.
+\end{itemize}
+
+\section{Method validation}
+
+The spectral boundary-integral method, in addition to the rate-and-state fault slip simulations, couples together several physical processes that could not be simulated with another individual code. Further, no analytical solutions are available that also couple all these processes. It is, therefore, nearly impossible to benchmark and test all capabilities of the code and implementation simultaneously. However, here we list to provide an overview of the tests and validation we carried out.
+
+\begin{itemize}
+    \item As was reported in Figure \ref{fig:Song} the SBI solutions for $\tau'$ and $p^\pm$ were tested against the solutions of \cite{Song2017}.
+    \item The analytical inversion of the Laplace transform was in all cases tested by also numerically inverting the Laplace transform numerically using the Talbot method \cite{Talbot1979}
+    \item Using $p^+$ as the relevant pore pressure when computing the effective normal stress, we reproduced the results of \cite{Heimisson2019}, which were done with a different code \cite{Torberntsson2018}. We, for example, reproduced the spontaneously occurring instabilities at mildly rate-strengthening friction that give rise to slow-slip pulses, which only occur in a limited parameter regime. Our results were consistent with the spatial dimension of the instabilities and the pulse propagation speeds as reported by \cite{Heimisson2019}.
+    \item Using the linearized stability analysis of \cite{Heimisson2021} we identified the critical wavenumber for many different regimes, such as high diffusivity, low diffusivity, intermediate diffusivity as well as thicker and thinner shear zones. In the code, a fully non-linear implementation, we induced a critical wavelength perturbation, as determined by the linearized analysis, by introducing a small perturbation in the initial state around steady-state sliding. We found in all cases that the perturbation in the slip speed oscillated without growing or decaying.
+\end{itemize}
+
+The tests and benchmarking above do validate most aspects of the implementation and method we have introduced in this paper. However, none test the injection into the fault and fluid propagation as a result of the injection. In order to check the robustness of the algorithm in this regard, we set up a problem with injection and delayed nucleation with dilatancy. The simulations are run until the slip speed reaches 1 cm/s, which we take as the instability time. This setup thus tests how well the pore pressure injection and subsequent diffusion is resolved as it promotes instability. We generate a manufactured solution with the error tolerance and state integration parameter set to $\xi = 1/4096$ (see section \ref{sec:time}). Then setting $\xi \in \{ 1/4, 1/8, 1/16, 1/32, 1/64  \}$ and investigating the $L_1$ norm error of the manufactured solution and the less accurate solutions plotted against the total number of iterations (which scales with the computational time) we see a second-order convergence. Where we look at the time of instability, the slip speed profile at the instability time, the $p_c$ value at the instability time, and the slip profile at that time. $\xi = 1/32$ roughly correspond to a relative error of $10^{-3}$ in all the fields we looked at, but we stress that the magnitude of the relative error depends on the problem and the simulation time. For simulations we favor using $\xi = 1/32$ and one minimum iteration (see section \ref{sec:time} for discussion on iterations). If smaller values than $\xi = 1/64$ are compared to the manufactured solution, the convergence gets more complicated but tends to improve to the first order with the iteration number. Using no minimum iteration or 2 minimum iterations also works and gives consistent results. We suggest 1 minimum iteration is most efficient in terms of obtaining a stable convergent solution at the fewest total iterations.
+
+Finally, we note that Figure \ref{fig:Appg0}c demonstrates, by chance, that the simulations are well resolved and accurate. A careful inspection of the figures shows that the last event is not one event but two events nucleating at exactly the same time around $x \approx \pm 30$ m and then coalescing. While such a high degree of symmetry is not physically realistic, it is a strong indication of well-resolved simulations in time and space, especially when it occurs not at the first simulated event. The same phenomenon also occurs in Figure \ref{fig:Appg0}b, but it is not as clear.
+
+
+\newpage
+
+\bibliography{agusample}
+
+
+
+
+\end{document}
+
+
+
+More Information and Advice:
+
+%% ------------------------------------------------------------------------ %%
+%
+%  SECTION HEADS
+%
+%% ------------------------------------------------------------------------ %%
+
+% Capitalize the first letter of each word (except for
+% prepositions, conjunctions, and articles that are
+% three or fewer letters).
+
+% AGU follows standard outline style; therefore, there cannot be a section 1 without
+% a section 2, or a section 2.3.1 without a section 2.3.2.
+% Please make sure your section numbers are balanced.
+% ---------------
+% Level 1 head
+%
+% Use the \section{} command to identify level 1 heads;
+% type the appropriate head wording between the curly
+% brackets, as shown below.
+%
+%An example:
+%\section{Level 1 Head: Introduction}
+%
+% ---------------
+% Level 2 head
+%
+% Use the \subsection{} command to identify level 2 heads.
+%An example:
+%\subsection{Level 2 Head}
+%
+% ---------------
+% Level 3 head
+%
+% Use the \subsubsection{} command to identify level 3 heads
+%An example:
+%\subsubsection{Level 3 Head}
+%
+%---------------
+% Level 4 head
+%
+% Use the \subsubsubsection{} command to identify level 3 heads
+% An example:
+%\subsubsubsection{Level 4 Head} An example.
+%
+%% ------------------------------------------------------------------------ %%
+%
+%  IN-TEXT LISTS
+%
+%% ------------------------------------------------------------------------ %%
+%
+% Do not use bulleted lists; enumerated lists are okay.
+% \begin{enumerate}
+% \item
+% \item
+% \item
+% \end{enumerate}
+%
+%% ------------------------------------------------------------------------ %%
+%
+%  EQUATIONS
+%
+%% ------------------------------------------------------------------------ %%
+
+% Single-line equations are centered.
+% Equation arrays will appear left-aligned.
+
+Math coded inside display math mode \[ ...\]
+ will not be numbered, e.g.,:
+ \[ x^2=y^2 + z^2\]
+
+ Math coded inside \begin{equation} and \end{equation} will
+ be automatically numbered, e.g.,:
+ \begin{equation}
+ x^2=y^2 + z^2
+ \end{equation}
+
+
+% To create multiline equations, use the
+% \begin{eqnarray} and \end{eqnarray} environment
+% as demonstrated below.
+\begin{eqnarray}
+  x_{1} & = & (x - x_{0}) \cos \Theta \nonumber \\
+        && + (y - y_{0}) \sin \Theta  \nonumber \\
+  y_{1} & = & -(x - x_{0}) \sin \Theta \nonumber \\
+        && + (y - y_{0}) \cos \Theta.
+\end{eqnarray}
+
+%If you don't want an equation number, use the star form:
+%\begin{eqnarray*}...\end{eqnarray*}
+
+% Break each line at a sign of operation
+% (+, -, etc.) if possible, with the sign of operation
+% on the new line.
+
+% Indent second and subsequent lines to align with
+% the first character following the equal sign on the
+% first line.
+
+% Use an \hspace{} command to insert horizontal space
+% into your equation if necessary. Place an appropriate
+% unit of measure between the curly braces, e.g.
+% \hspace{1in}; you may have to experiment to achieve
+% the correct amount of space.
+
+
+%% ------------------------------------------------------------------------ %%
+%
+%  EQUATION NUMBERING: COUNTER
+%
+%% ------------------------------------------------------------------------ %%
+
+% You may change equation numbering by resetting
+% the equation counter or by explicitly numbering
+% an equation.
+
+% To explicitly number an equation, type \eqnum{}
+% (with the desired number between the brackets)
+% after the \begin{equation} or \begin{eqnarray}
+% command.  The \eqnum{} command will affect only
+% the equation it appears with; LaTeX will number
+% any equations appearing later in the manuscript
+% according to the equation counter.
+%
+
+% If you have a multiline equation that needs only
+% one equation number, use a \nonumber command in
+% front of the double backslashes (\\) as shown in
+% the multiline equation above.
+
+% If you are using line numbers, remember to surround
+% equations with \begin{linenomath*}...\end{linenomath*}
+
+%  To add line numbers to lines in equations:
+%  \begin{linenomath*}
+%  \begin{equation}
+%  \end{equation}
+%  \end{linenomath*}
+
+
+
+%Here we demonstrate and application of the methodology to better understand earthquake triggering and nucleation into a fault in response to injection with and without dilatancy.
+
+%\subsection{Problem Setup}
+
+%The problem setup is similar to what is shown in the schematic Figure \ref{fig:schema}a. Fluid mass is injected into a region of from  $x = -5$ m to $x = 5$ m  at the origin of the x-axis. The frictional fault is 300 m long, with imposed creeping regions slipping at $V = V_0 = 10^{-9}$ m/s of 100 m on either side of the frictional domain. The fault is initially at steady-state sliding, no initial perturbation is added to the system other than the injection. In this exercise we vary only one parameter, the mass injection rate $\dot{Q}$, with the additional constraint that we only inject a fixed mass of water of 0.36 kg per unit length in the invariant direction ($z$-axis). During the injection the rate is constant and then abruptly turned off when the fixed amount of mass is reached. We explore a large range in injection duration ranging from 1 minute to 1 month, thus ranging 4 orders of magnitude in injection rate. We simulate the nucleation of the first event and stop all simulations after the first seismic even when slip speed has started decreasing.
+
+
+%Parameters are as indicated in Table \ref{symbolstable}. It's worth highlighting that here we have assumed chosen the shear-zone mobility to be strongly anisotropic with $\kappa_{cx}$ 9 orders of magnitude larger than $\kappa_{cy}$. This is, firstly, motivated by idea that highly sheared fault zones may act as  barriers for fluid flow across them but conduits for flow along the fault zone. Secondly, we wanted to demonstrate that the method could provide a stable solution for such a large mobility difference.
+
+%\subsection{Results}
+
+%We first explore the slip-speed evolution following an injection in two case: 1 minute injection (Figure \ref{fig:time}ab) and 1 week injection (Figure \ref{fig:time}cd). First, we observe remarkably small difference between not included dilatancy and including dilatancy Figure \ref{fig:time} a,c vs. b,d). This simply means that most of the time from injection to nucleation, the dilatancy effect is negligible. However, as will be apparent in Figure \ref{fig:simcomb}, that if the same results are plotted with the time-step number on the $y$-axis significant then differences are revealed since the dilatancy reponse will only affect the rupture when the slip speed is approaching seismic levels.
+
+%\begin{figure}[H]
+%\includegraphics[scale = 1]{Figures/time_comparison.pdf} % this command will be ignored
+%\caption{Slip rate, shown as color in a $\log_{10}$ scale, on fault with time for 1 minute injection duration (top row, a, b) and 1 week injection duration (bottom row, c, d). Further, we show the response without dilatancy (a,c) and with dilatancy. We note, that as plotted it appears that dilatancy has not effect on slip speed evolution, but this is not true, as is disscuss in this section. One can observe signification deferences in slip-speed evolution depending on the injection duration. For rapid injection (a,b) the nucleation of a seismic even happens around day 2 for slow injection (c,d) closer to 1 week time. }
+%\label{fig:time}
+%\end{figure}
+
+%Viewing the simulation results in terms of simulation time-step number, but not physical time, is useful to reveal processes that may happen quickly compared to the nucleation time. Figure \ref{fig:simcomb} shows slip speed (a,d), cumulative slip (b,e), and average shear zone pore pressure (c,f), for injection and conditions (1 minute injection) except one case doesn't include dilatancy (a,b,c) and the other includes dilatancy (d,e,f). Comparing to Figure \ref{fig:time}, where the results look nearly identical, we now observe substantial differences. First in the slip speed we observe a more gradual expansion of the nucleation region in the simulation with dilatancy (d), this is suggesting greater accumulation of aseismic slip. Indeed the slip during the earthquake is less for the diltancy case compared to the non-dilatancy case (e vs. b). This difference will be further analyzed in Figure \ref{fig:allcomb}. Further, the average pore pressure evolves differently as expected. The only change in average pore pressure for the no dilatancy, $\gamma = 0$, occurs in the beginning due to the injection (c). That pore pressure then quickly diffuses into the bulk. Exactly the same change occurs in the dilatancy, $\gamma = 1.7\cdot10^{-4}$, this change appears to be shorter but that is only because the y-axis is different as is discussed in the next paragraph. The average pore pressure change in the two cases deviates only when the slip speed has reached about $\sim 10^{-5}$ m/s. At this point the diffusion along the shear zone and along the bulk doesn't equilibrate the pore pressure decrease sufficiently fast such that the pressure in the shear zone drops, it is only at this point that the two cases become significantly difference.
+
+%We highlight that the simulation with dilatancy requires more time-step, but here the $y$-axis represent every 50th true time-step taken in the simulation. Thus a simulation, in this case, with dilatancy requiers about 4 time as many time steps. This is because, as nucleation is ongoing the pore pressure continuously changes, and the algorithm needs refinement for accuracy. However, most of the time-steps the pore pressure doesn't change significantly because the dilatancy induced pore pressure changes are equilibrated by the bulk (Figure \ref{fig:simcomb}e).
+
+%\begin{figure}[H]
+%\includegraphics[scale = 0.8]{Figures/simulation_compare.pdf} % this command will be ignored
+%\caption{Comparison of different fault fields as a function of time-step, for identical simulation (1 minute injection time) with and without dilatancy. Log-slip speed $\log_{10} (V)$ (a,d), cumulative slip $\delta$ (b,e), and average shear zone pore pressure $\langle p \rangle$ (c,f). Diltancy is omitted by setting $\gamma = 0$ (a,b,c), but included with $\gamma = 1.7\cdot10^{-4}$ (d,e,f). Note that color scales doe not represent the full range for better visualization. Solid black or dark grey incorporate values beyond the range of the color scales.}
+%\label{fig:simcomb}
+%\end{figure}
+
+%Two prominent and current questions in the study of induced earthquakes are: 1) does injection strategy the timing and size of an induced earthquake. 2) What is the role of dilatancy in injection induced seismicity? Here we explore these questions by running simulations (such as show in Figures \ref{fig:time} and \ref{fig:simcomb}) for injection durations ranging from 1 minute to 1 month. As was previously mentioned, the duration in changed but not the mass injected. 
+
+%The relationship between the injection duration and the timing of the earthquake is explored in Figure \ref{fig:allcomb}a. We observe that once the injection duration exceeds 1 day, there is a dependence of the two resembling a square-root function. However at a shorter injection duration there is an abrupt drop in the event time. The one-to-one line on the plot demonstrates that if the dots occur on the right-hand side of the lone it means that the seismic event occurs during the injection. However, if the dots occur on the left-hand side they occur after injection stops. This leads to a conclusion that might be perceived as counter intuitive, which is that if you inject the mass rapidly the seismic event happens after you stop injecting. For example, if the mass is all injected in 1 minute, the event still takes about 50 hours to become and earthquake. This delay is simply the manifestation of other time-dependent processes as the unstable slip patch takes time to grow and reach a critical dimension. Such a possible delay between injection and nucleation is often not accounted for in simplified models of induced seismicity. A striking feature is the overlap of the blue and orange dots indicating that dilatancy isn't affecting the time the event occurs. This is simply relecting what was observed in Figure \ref{fig:time} and \ref{fig:simcomb}) that dilatancy, in this problem, isn't important until at later stages in the nucleation process when slip speed is relatively large. However, Figure \ref{fig:allcomb}a demonstrates that this is true for all the tested injection duration. 
+
+%Figure \ref{fig:allcomb}b explores the average slip that occurs while the fault is slipping at seismic slip speeds (here taken as 1 cm/s or higher).
+
+%\begin{figure}[H]
+%\includegraphics[scale = 1]{Figures/Instability_overview.pdf} % this command will be ignored
+%\caption{}
+%\label{fig:allcomb}
+%\end{figure}
